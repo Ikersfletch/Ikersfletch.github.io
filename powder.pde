@@ -1,5 +1,5 @@
-size( 400, 400 );
 var powder = [];
+size(400,400);
 var powderCycle = [
 color(16, 112, 11),color(94, 74, 22),color(94, 74, 22),color(95,95,95),color(85,85,85),color(75,75,75),color(65,65,65),color(55,55,55),color(45,45,45),color(35,35,35),color(25,25,25),color(0,0,0),color(10,0,10),color(20,0,20),color(30,0,30),color(50,0,50),color(70,0,70),color(90,0,90),color(100,0,100),color(110,0,110),color(120,0,120),color(130,0,130),color(130,0,120),color(130,0,110),color(130,0,100),color(140,0,90),color(150,0,80),color(160,0,70),color(165,0,60),color(170,0,40),color(175,0,20),color(180,0,10),color(190,10,0),color(190,30,0),color(200,40,0),color(210,50,0),color(210,70,0),color(210,90,0),color(210,100,0),color(220,120,0),color(190,140,0),color(200,160,0),color(200,180,0),color(210,200,0),color(220,220,0),color(240,240,0),color(240,240,30),color(210,240,60),color(170,240,90),color(130,240,120),color(100,240,150),color(72, 240, 130),color(72, 240, 91),color(51, 230, 68),color(20,230,30),color(0,230,10),color(0,210,30),color(0,190,60),color(0,170,120),color(0,150,150),color(0,120,170),color(0,80,190),color(0,50,210),color(0,20,230),color(0,0,255),color(50,50,255),color(100,100,255),color(150,150,255),color(200,200,255),color(250,250,255)];
 var mobs = [];
