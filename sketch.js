@@ -105,8 +105,9 @@ var cs;
 var di;
 var test;
 var ui;
+var ui3d;
 function setup() {
-  createCanvas(screen.width-16, screen.height-16);
+  createCanvas(screen.width, screen.height);
 
   p1 = new Player(0,0,50,"none","none",[],90,color(0,255,255),50);
   
@@ -118,8 +119,9 @@ function setup() {
     new chunk(returnChunk(),0,0,4),
     new chunk(returnChunk(),0,0,5),
 ];
-  di = createGraphics(screen.width-14, screen.height-14,WEBGL);
-  ui = createGraphics(screen.width-14, screen.height-14);
+  di = createGraphics(screen.width, screen.height,WEBGL);
+  ui = createGraphics(screen.width, screen.height);
+  ui3d = createGraphics(125,125,WEBGL);
 }
 
 
@@ -517,29 +519,28 @@ function Player(x,y,z,l,r,equip,skin,shirt,hair) {
     var gridy = (this.y+500)%100;
     if (this.x>-500&&this.x<500&&this.y<500&&this.y>-500) {
       if (chunkd.data.wallsX[floor(this.y/100)+5][floor(this.x/100)+5][0] !== 0) {
-        if (gridy<15) {
+        if (gridy<15&&chunkd.data.stairs[floor(this.y/100)+5][floor(this.x/100)+5][0] !== 2) {
           this.y = floor(this.y/100)*100 + 15;
         }
       }
       if (chunkd.data.wallsX[floor(this.y/100)+6][floor(this.x/100)+5][0] !== 0) {
-        if (gridy>85) {
+        if (gridy>85&&chunkd.data.stairs[floor(this.y/100)+5][floor(this.x/100)+5][0] !== 4) {
           this.y = floor(this.y/100)*100 + 85;
         }
       }
     }
     if (this.x>-500&&this.x<500&&this.y<500&&this.y>-500) {
       if (chunkd.data.wallsY[floor(this.y/100)+5][floor(this.x/100)+5][0] !== 0) {
-        if (gridx<15) {
+        if (gridx<15&&chunkd.data.stairs[floor(this.y/100)+5][floor(this.x/100)+5][0] !== 1) {
           this.x = floor(this.x/100)*100 + 15;
         }
       }
       if (chunkd.data.wallsY[floor(this.y/100)+5][floor(this.x/100)+6][0] !== 0) {
-        if (gridx>85) {
+        if (gridx>85&&chunkd.data.stairs[floor(this.y/100)+5][floor(this.x/100)+5][0] !== 3) {
           this.x = floor(this.x/100)*100 + 85;
         }
       }
     }
-    
     
     this.floorz = 0;
     if (this.x>-500&&this.x<500&&this.y>-500&&this.y<500) {
@@ -585,6 +586,40 @@ function Player(x,y,z,l,r,equip,skin,shirt,hair) {
     ui.fill(wallcolorpush[0],wallcolorpush[1],wallcolorpush[2]);
     ui.rect(10,30,125,125);
     
+    ui3d.push();
+    ui3d.scale(0.8);
+    ui3d.background(255);
+    ui3d.strokeWeight(3);
+    ui3d.fill(wallcolorpush[0],wallcolorpush[1],wallcolorpush[2]);
+    ui3d.rotateX(-QUARTER_PI);
+    ui3d.rotateY(QUARTER_PI);
+    if (this.mode === "poles") {
+    ui3d.box(15,105,15);
+    }
+    if (this.mode === "wallsX") {
+      ui3d.box(15,105,105);
+    }
+    if (this.mode === "wallsY") {
+      ui3d.box(105,105,15);
+    }
+    if (this.mode === "stairs") {
+          ui3d.beginShape(TRIANGLES);
+          ui3d.vertex(-50,-50,-50);
+          ui3d.vertex(-50,50,50);
+          ui3d.vertex(50,50,50);
+          ui3d.vertex(-50,-50,-50);
+          ui3d.vertex(50,-50,-50);
+          ui3d.vertex(50,50,50);
+          ui3d.endShape();
+    }
+    if (this.mode === "floors") {
+      ui3d.box(105,5,105);
+      if (this.mod === 2) {
+        
+      }
+    }
+    ui3d.pop();
+    
   };
 }
 function chunk(cdata,x,y,z) {
@@ -621,9 +656,13 @@ function chunk(cdata,x,y,z) {
           di.stroke(this.data.poles[j][i][1][0]*0.9,this.data.poles[j][i][1][1]*0.9,this.data.poles[j][i][1][2]*0.9);
           di.strokeWeight(2);
           di.push();
-          di.fill(this.data.poles[j][i][1][0],this.data.poles[j][i][1][1],this.data.poles[j][i][1][2]);
+          di.fill(this.data.poles[j][i][1][0]*0.95,this.data.poles[j][i][1][1]*0.95,this.data.poles[j][i][1][2]*0.95);
           di.translate(i*100-500,j*100-500,50);
           di.box(25,25,105);
+          di.noStroke();
+          di.fill(this.data.poles[j][i][1][0],this.data.poles[j][i][1][1],this.data.poles[j][i][1][2]);
+          di.translate(0,0,53);
+          di.plane(25,25);
           di.pop();
         }
         
@@ -638,9 +677,13 @@ function chunk(cdata,x,y,z) {
           di.stroke(this.data.wallsX[j][i][1][0]*0.9,this.data.wallsX[j][i][1][1]*0.9,this.data.wallsX[j][i][1][2]*0.9);
           di.strokeWeight(2);
           di.push();
-          di.fill(this.data.wallsX[j][i][1][0],this.data.wallsX[j][i][1][1],this.data.wallsX[j][i][1][2]);
+          di.fill(this.data.wallsX[j][i][1][0]*0.95,this.data.wallsX[j][i][1][1]*0.95,this.data.wallsX[j][i][1][2]*0.95);
           di.translate(i*100-500+50,j*100-500,50);
           di.box(100,15,100);
+          di.noStroke();
+          di.fill(this.data.wallsX[j][i][1][0],this.data.wallsX[j][i][1][1],this.data.wallsX[j][i][1][2]);
+          di.translate(0,0,51);
+          di.plane(100,15);
           di.pop();
         }
         
@@ -655,9 +698,13 @@ function chunk(cdata,x,y,z) {
           di.stroke(this.data.wallsY[j][i][1][0]*0.9,this.data.wallsY[j][i][1][1]*0.9,this.data.wallsY[j][i][1][2]*0.9);
           di.strokeWeight(2);
           di.push();
-          di.fill(this.data.wallsY[j][i][1][0],this.data.wallsY[j][i][1][1],this.data.wallsY[j][i][1][2]);
+          di.fill(this.data.wallsY[j][i][1][0]*0.95,this.data.wallsY[j][i][1][1]*0.95,this.data.wallsY[j][i][1][2]*0.95);
           di.translate(i*100-500,j*100-500+50,50);
           di.box(15,100,100);
+          di.noStroke();
+          di.fill(this.data.wallsY[j][i][1][0],this.data.wallsY[j][i][1][1],this.data.wallsY[j][i][1][2]);
+          di.translate(0,0,51);
+          di.plane(15,100);
           di.pop();
         }
         
@@ -672,12 +719,15 @@ function chunk(cdata,x,y,z) {
           di.stroke(this.data.floors[j][i][1][0]*0.9,this.data.floors[j][i][1][1]*0.9,this.data.floors[j][i][1][2]*0.9);
           di.strokeWeight(2);
           di.push();
-          di.fill(this.data.floors[j][i][1][0],this.data.floors[j][i][1][1],this.data.floors[j][i][1][2]);
+          di.fill(this.data.floors[j][i][1][0]*0.95,this.data.floors[j][i][1][1]*0.95,this.data.floors[j][i][1][2]*0.95);
           di.translate(i*100-500+50,j*100-500+50,0);
           di.box(100,100,6);
+          di.noStroke();
+          di.fill(this.data.floors[j][i][1][0],this.data.floors[j][i][1][1],this.data.floors[j][i][1][2]);
+          di.translate(0,0,4);
+          di.plane(100,100);
           di.pop();
         }
-        
       }
     }
     for (var j = 0; j < this.data.stairs.length; j ++) {
@@ -692,13 +742,34 @@ function chunk(cdata,x,y,z) {
           di.fill(this.data.stairs[j][i][1][0],this.data.stairs[j][i][1][1],this.data.stairs[j][i][1][2]);
           di.translate(i*100-500+50,j*100-500+50,50);
           di.rotateZ(this.data.stairs[j][i][0]*HALF_PI);
-          di.beginShape(TRIANGLES);
+          di.beginShape();
           di.vertex(-50,-50,-50);
           di.vertex(-50,50,50);
           di.vertex(50,50,50);
           di.vertex(-50,-50,-50);
           di.vertex(50,-50,-50);
           di.vertex(50,50,50);
+          di.fill(this.data.stairs[j][i][1][0]*0.95,this.data.stairs[j][i][1][1]*0.95,this.data.stairs[j][i][1][2]*0.95);
+          di.vertex(-50,-50,-49);
+          di.vertex(-50,50,-49);
+          di.vertex(50,50,-49);
+          di.vertex(-50,-50,-49);
+          di.vertex(50,50,-49);
+          di.vertex(50,-50,-49);
+          di.vertex(-50,-50,-50);
+          di.vertex(-50,50,-50);
+          di.vertex(-50,50,50);
+          di.endShape();
+          di.beginShape();
+          di.vertex(50,50,-50);
+          di.vertex(50,-50,-50);
+          di.vertex(50,50,50);
+          di.vertex(50,50,-50);
+          di.vertex(-50,50,-50);
+          di.vertex(-50,50,50);
+          di.vertex(50,50,-50);
+          di.vertex(50,50,50);
+          di.vertex(-50,50,50);
           di.endShape();
           di.pop();
         }
@@ -716,7 +787,7 @@ var zoom = 0;
 function draw() {
   d3d();
   image(ui,0,0);
-  
+  image(ui3d,10,30);
   
   if (keys[LEFT_ARROW]===true) {
     camZ +=3;
@@ -797,4 +868,5 @@ function d3d() {
   cs[4].do();
   di.pop();
   image(di,1,1);
+  
 }
