@@ -110,7 +110,7 @@ var ui3d;
 function setup() {
   createCanvas(screen.width, screen.height);
   wheel = createGraphics(150,120);
-  
+
   p1 = new Player(0,0,50,"none","none",[],90,color(0,255,255),50);
   
   cs =  [
@@ -633,12 +633,6 @@ function Player(x,y,z,l,r,equip,skin,shirt,hair) {
     ui.rect(0,0,120,11);
     ui.fill(255,255,255);
     ui.text(this.mode+': '+this.mod,0,10);
-    ui.colorMode(HSB);
-    ui.fill(wallcolorpush[0],wallcolorpush[1],wallcolorpush[2]);
-    ui.rect(10,30,125,125);
-    ui.image(wheel,0,160);
-    
-
     ui3d.push();
     ui3d.scale(0.8);
     ui3d.background(255);
@@ -650,13 +644,41 @@ function Player(x,y,z,l,r,equip,skin,shirt,hair) {
     ui3d.box(15,105,15);
     }
     if (this.mode === "wallsX") {
+      if (this.mod<2) {
       ui3d.box(15,105,105);
+      } else {
+          ui3d.push();
+          ui3d.rotateY(HALF_PI);
+          ui3d.rotateX(HALF_PI);
+          ui3d.translate(-50+15,0,0);
+          ui3d.box(30,15,100);
+          ui3d.translate(35,0,35);
+          ui3d.box(40,15,30);
+          ui3d.translate(35,0,-35);
+          ui3d.box(30,15,100);
+          ui3d.pop();
+      }
+      
     }
     if (this.mode === "wallsY") {
+      if (this.mod<2) {
       ui3d.box(105,105,15);
+      } else {
+          ui3d.push();
+          ui3d.rotateY(HALF_PI);
+          ui3d.rotateX(HALF_PI);
+          ui3d.translate(0,-50+15,0);
+          ui3d.box(15,30,100);
+          ui3d.translate(0,35,35);
+          ui3d.box(15,40,30);
+          ui3d.translate(0,35,-35);
+          ui3d.box(15,30,100);
+          ui3d.pop();
+      
+      }
     }
     if (this.mode === "stairs") {
-          ui3d.beginShape(TRIANGLES);
+          ui3d.beginShape();
           ui3d.vertex(-50,-50,-50);
           ui3d.vertex(-50,50,50);
           ui3d.vertex(50,50,50);
@@ -664,12 +686,18 @@ function Player(x,y,z,l,r,equip,skin,shirt,hair) {
           ui3d.vertex(50,-50,-50);
           ui3d.vertex(50,50,50);
           ui3d.endShape();
+          
     }
     if (this.mode === "floors") {
       ui3d.box(105,5,105);
       if (this.mod === 2) {
-        
-      }
+            ui3d.push();
+            ui3d.noStroke();
+            ui3d.translate(-30,-70,-30);
+            ui3d.fill(60,100,100);
+            ui3d.sphere(20);
+            ui3d.pop();
+          }
     }
     ui3d.pop();
     ui3d.colorMode(RGB);
@@ -880,15 +908,19 @@ var zoom = 0;
 
 var w = [0,0,0];
 function draw() {
-  
   d3d();
-  image(ui,0,0);
   image(ui3d,10,30);
   
+  image(ui,0,0);
+  uikey(20,height-50,17);
+
+  uikey(70,height-50,18);
   //wheel.background(255,0,255);
   
-  
+  push();
+  translate(20,20);
   colorwheel();
+  pop();
   w = [0+wallcolorpush[0],0+wallcolorpush[1],0+wallcolorpush[2]];
   arrowkeys();
   
@@ -904,7 +936,7 @@ function draw() {
 }
 
 function d3d() {
-  di.background(255,255,255);
+  di.background(255);
   /*
   di.push();
   di.translate(0,0,500);
@@ -975,8 +1007,7 @@ function arrowkeys() {
 }
 function colorwheel() {
   wheel.colorMode(HSB);
-  
-  if (w[0]!==wallcolorpush[0]||w[1]!==wallcolorpush[1]||w[2]!==wallcolorpush[2]) {
+  if (keys[67] === true||frameCount<2) {
     wheel.push();
     wheel.stroke(0,0,0);
     wheel.fill(0,0,255);
@@ -998,7 +1029,7 @@ function colorwheel() {
       wheel.stroke(wallcolorpush[0],wallcolorpush[1],i);
       wheel.line(120,105-i,130,105-i);
     }
-  }
+  
   wheel.push();
   wheel.translate(50,50);
   wheel.rotate(wallcolorpush[0]*(PI/180));
@@ -1014,4 +1045,48 @@ function colorwheel() {
   wheel.rect(104,103-wallcolorpush[1],12,5);
   wheel.rect(118,103-wallcolorpush[2],12,5);
   wheel.pop();
+  
+  push();
+  translate(0,160);
+  scale(0.75);
+  colorMode(RGB);
+  fill(125,125,125);
+  rect(20,20,60,37);
+  fill(0,0,0);
+  ellipse(45,40,20,20);
+  fill(255,255,255);
+  rect(25,25,10,5);
+  pop();
+  
+  image(wheel,25,180,wheel.width*0.75,wheel.height*0.75);
+  } else {
+  image(wheel,0,160,wheel.width*0.5,wheel.height*0.5);
+
+  push();
+  translate(0,160);
+  scale(1.25);
+  colorMode(RGB);
+  fill(125,125,125);
+  rect(20,20,60,37);
+  fill(0,0,0);
+  ellipse(45,40,20,20);
+  fill(255,255,255);
+  rect(25,25,10,5);
+  pop();
+  }
+  uikey(0,230,67);
+}
+function uikey(x,y,k) {
+  push();
+  stroke(0,0,0);
+  fill(255,255,255);
+  if (keys[k]===true) {
+    fill(255,255,0);
+  }
+  rect(x,y,30,30,10);
+  fill(0,0,0);
+  textAlign(CENTER);
+  text(char(k),x+15,y+20);
+  textAlign(LEFT,BOTTOM);
+  pop();
 }
