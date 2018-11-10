@@ -4,13 +4,14 @@ var layer;
 var rz = 0;
 var rx = 0;
 var CameraMode = "sweep";
+var tutorial = 0;
 function setup() {
   createCanvas(screen.width,screen.height);
   d3 = createGraphics(screen.width,screen.height,WEBGL);
   for (var i = 0; i < 800; i++) {
     dust[i] = new Dust(floor(random(1000)/50)*50-500,floor(random(1000)/50)*50-500,floor(random(1000)/50)*50+100,0);
   }
-  layer = [color(0,200,0),color(130, 94, 0),color(150),color(130),color(120),color(110),color(100),color(90),color(80),color(70),color(60),color(50),color(40),color(30),color(20),color(10),color(0),color(10,0,0),color(20,0,0),color(30,0,0),color(40,0,0),color(50,0,0),color(60,0,0),color(70,0,0)];
+  layer = [color(0,200,0),color(130, 94, 0),color(150),color(130),color(110),color(90),color(70),color(50),color(30),color(10),color(0),color(20,0,0),color(40,0,0),color(60,0,0),color(80,0,0),color(100,0,0),color(120,0,0),color(140,0,0)];
   angleMode(DEGREES);
 }
 function Player(x,y,z) {
@@ -233,7 +234,7 @@ function doDust() {
     }
   }
 }
-function environment() {
+function Environment() {
   d3.push();
   d3.noStroke();
   d3.background(204, 255, 253);
@@ -274,22 +275,64 @@ function Camera() {
   }
 }
 function UI() {
-  fill(255,255,255);
+  fill(0,0,0);
   textSize(30);
-  text(p1.count,10,50);
+  text(p1.count,53,53);
+  fill(255,255,255);
+  text(p1.count,50,50);
+  
+}
+var tufu = function(t) {
+  fill(0,0,0,150);
+  rect(-10,-10,width+20,height+20);
+  
+  textAlign(CENTER);
+  textSize(30);
+  fill(0,0,0);
+  text(t[tutorial],width/2+3,height/2+3);
+  text("press SPACE to continue",width/2+3,height*(3/4)+3);
+  fill(255,255,255);
+  text(t[tutorial],width/2,height/2);
+  text("press SPACE to continue",width/2,height*(3/4));
+  if (pkey[32] === true) {
+    tutorial ++;
+  }
+}
+var paused = false;
+function Pause() {
+  if (pkey[27] === true) {
+    paused = !paused;
+  }
+  if (paused === true) {
+    fill(0,0,0,150);
+    rect(-10,-10,width+20,height+20);
+    textSize(50);
+    fill(0,0,0);
+    text("PAUSED",width/2+3,height*(1/4)+3);
+    fill(255,255,255);
+    text("PAUSED",width/2,height*(1/4));
+  }
 }
 function draw() {
+  if (tutorial === 5) CameraMode = "focus";
+  
   frameRate(10);
   background(255);
   d3.push();
+  if (paused === false) {
   Camera();
   
-  environment();
-  p1.move();
+  Environment();
+  if (frameCount>115&&tutorial > 6) p1.move();
   doDust();
-  p1.interact();
-  p1.display();
+  if (frameCount>115&&tutorial > 6) {
+    p1.interact();
+    p1.display();
+  }
+  }
   image(d3,0,0);
+  if (tutorial <= 6) tufu(["Welcome to powder!","Rotate camera with the arrow keys","Focus camera with \'C\'","Move using WASD\npress SPACE to jump","press and hold SHIFT to pick up blocks","When you pick up a block, you can see the density\nplace two blocks of the same density on top of\neach other to merge them and double the density"]);
+  else Pause();
   UI();
   d3.pop();
   pkey = [];
