@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<title>NES battle!</title>
+  
+  <!--><link rel="icon" href="assets/logo.png"><!-->
+  <style>
+    body {
+        background-color : grey
+    }
+    canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+    width: 800px;
+    }
+    
+</style>
+<script>
+  window.addEventListener("keydown", function(e) {
+    // space and arrow keys
+    if([32, 37, 38, 39, 40,17].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
+
+</script>
+<script src="js/p5.min.js"></script>
+<script src="js/keys.js"></script>
+<script src="js/text.js"></script>
+<script src="js/sketch.js"></script>
+
+
+
+
