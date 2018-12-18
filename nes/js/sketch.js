@@ -25,6 +25,7 @@ var spriteInEdit = [
 var paletteInEdit = [];
 var color = [0,0,0];
 var itemInEdit;
+var boxInEdit;
 var items = [
   {
     'icon' : [
@@ -55,21 +56,9 @@ var items = [
     'rboxes' : []
   }
 ];
-
-function returnItem() {
-  return {
-    'icon' : [],
-    'iconPalette' : [],
-    'sprites' : [],
-    'palette' : [],
-    'pboxes' : [],
-    'cboxes' : [],
-    'rboxes' : [],
-    'anim' : 'idle'
-  };
-}
 var test;
 var plus;
+
 function setup() {
   plus = [
         [0,0,0,0,0,0,0,0],
@@ -120,7 +109,7 @@ function setup() {
     'rboxes' : []
   };
   test = createGraphics(40,40);
-
+  boxInEdit = [0,0,1,1,35,0,0,0,false,0];
   state = 0;
   paletteInEdit = [color(0,0,0,0),color(0),color(255),color(255,0,0)];
   createCanvas(800,600);
@@ -355,6 +344,32 @@ function setup() {
   }
 }
 
+function emptySprite() {
+  return [
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+  ];
+}
+
+function returnItem() {
+  return {
+    'icon' : [],
+    'iconPalette' : [],
+    'sprites' : [],
+    'palette' : [],
+    'pboxes' : [],
+    'cboxes' : [],
+    'rboxes' : [],
+    'anim' : 'idle'
+  };
+}
+
 function displaySprite(sprite,palette,scalar,xpos,ypos) {
   //sprite - a 2d array
   //palette - a set of four color variables in an array
@@ -374,6 +389,7 @@ function displaySprite(sprite,palette,scalar,xpos,ypos) {
   }
   pop();
 }
+
 function displayTile(sprite,palette,scalar,xpos,ypos) {
   //sprite - a 2d array
   //palette - a set of four color variables in an array
@@ -405,6 +421,7 @@ function spriteToImage(sprite,palette) {
   img.updatePixels();
   return img;
 }
+
 function altercolor(c,rc,gc,bc) {
   var cc = [red(c),green(c),blue(c)];
   cc[0]+=rc;
@@ -414,7 +431,7 @@ function altercolor(c,rc,gc,bc) {
     if (cc[i]>255) cc[i] = 255;
     if (cc[i]<0) cc[i] = 0;
   }
-  return color(cc[0],cc[1],cc[2]);
+  return color(cc[0],cc[1],cc[2],alpha(c));
 }
 
 function Player(x,y,type,palette,inputs) {
@@ -637,13 +654,15 @@ function Player(x,y,type,palette,inputs) {
         for (var i = 0; i < this.items.a.pboxes.length; i ++) {
           if (this.items.atime === this.items.a.pboxes[i][2]&&this.items.atimer>=this.items.a.pboxes[i][2]) {
             var ito = this.items.a;
+            var alter = 0;
+            if (this.items.a.pboxes[i][8] === true) alter = this.v.y;
             hitboxes[hitboxes.length] = [
               0,
               ito.pboxes[i][3],
               ito.pboxes[i][4]*this.dir+this.x,
               ito.pboxes[i][5]+this.y,
               ito.pboxes[i][6]*this.dir,
-              ito.pboxes[i][7],
+              ito.pboxes[i][7]+alter*2,
               this.dir,
               this,
               ito.pboxes[i][8],
@@ -655,13 +674,15 @@ function Player(x,y,type,palette,inputs) {
         for (var i = 0; i < this.items.a.cboxes.length; i ++) {
           if ((this.items.atime+this.items.a.cboxes[i][9]) % this.items.a.cboxes[i][2] === 0) {
             var ito = this.items.a;
+            var alter = 0;
+            if (this.items.a.cboxes[i][8] === true) alter = this.v.y;
             hitboxes[hitboxes.length] = [
               0,
               ito.cboxes[i][3],
               ito.cboxes[i][4]*this.dir+this.x,
               ito.cboxes[i][5]+this.y,
               ito.cboxes[i][6]*this.dir,
-              ito.cboxes[i][7],
+              ito.cboxes[i][7]+alter*2,
               this.dir,
               this,
               ito.cboxes[i][8],
@@ -679,13 +700,15 @@ function Player(x,y,type,palette,inputs) {
       for (var i = 0; i < this.items.a.rboxes.length; i ++) {
           if (this.items.atimer === this.items.a.rboxes[i][2]) {
             var ito = this.items.a;
+            var alter = 0;
+            if (this.items.a.rboxes[i][8] === true) alter = this.v.y;
             hitboxes[hitboxes.length] = [
               0,
               ito.rboxes[i][3],
               ito.rboxes[i][4]*this.dir+this.x,
               ito.rboxes[i][5]+this.y,
               ito.rboxes[i][6]*this.dir,
-              ito.rboxes[i][7],
+              ito.rboxes[i][7]+alter*2,
               this.dir,
               this,
               ito.rboxes[i][8],
@@ -710,13 +733,15 @@ function Player(x,y,type,palette,inputs) {
         for (var i = 0; i < this.items.b.pboxes.length; i ++) {
           if (this.items.btime === this.items.b.pboxes[i][2]) {
             var ito = this.items.b;
+            var alter = 0;
+            if (this.items.b.pboxes[i][8] === true) alter = this.v.y;
             hitboxes[hitboxes.length] = [
               0,
               ito.pboxes[i][3],
               ito.pboxes[i][4]*this.dir+this.x,
               ito.pboxes[i][5]+this.y,
               ito.pboxes[i][6]*this.dir,
-              ito.pboxes[i][7],
+              ito.pboxes[i][7]+alter*2,
               this.dir,
               this,
               ito.pboxes[i][8],
@@ -728,13 +753,15 @@ function Player(x,y,type,palette,inputs) {
         for (var i = 0; i < this.items.b.cboxes.length; i ++) {
           if (this.items.btime % this.items.b.cboxes[i][2] === 0) {
             var ito = this.items.b;
+            var alter = 0;
+            if (this.items.b.cboxes[i][8] === true) alter = this.v.y;
             hitboxes[hitboxes.length] = [
               0,
               ito.cboxes[i][3],
               ito.cboxes[i][4]*this.dir+this.x,
               ito.cboxes[i][5]+this.y,
               ito.cboxes[i][6]*this.dir,
-              ito.cboxes[i][7],
+              ito.cboxes[i][7]+alter*2,
               this.dir,
               this,
               ito.cboxes[i][8],
@@ -751,13 +778,15 @@ function Player(x,y,type,palette,inputs) {
       for (var i = 0; i < this.items.b.rboxes.length; i ++) {
           if (this.items.btimer === this.items.b.rboxes[i][2]) {
             var ito = this.items.b;
+            var alter = 0;
+            if (this.items.b.rboxes[i][8] === true) alter = this.v.y;
             hitboxes[hitboxes.length] = [
               0,
               ito.rboxes[i][3],
               ito.rboxes[i][4]*this.dir+this.x,
               ito.rboxes[i][5]+this.y,
               ito.rboxes[i][6]*this.dir,
-              ito.rboxes[i][7],
+              ito.rboxes[i][7]+alter*2,
               this.dir,
               this,
               ito.rboxes[i][8],
@@ -812,21 +841,21 @@ function Player(x,y,type,palette,inputs) {
       playScreen = 'play';
     }
     if (pkey[this.i.a] === true) {
-      
+      this.items.a = itemInEdit;
     }
     if (keys[this.i.b] === true) {
       var channel = 1;
       if (keys[this.i.left] === true) channel = 0;
       if (keys[this.i.right] === true) channel = 2;
       if (keys[this.i.up] === true) {
-        if (channel === 0) itemInEdit.iconPalette[state] = altercolor(itemInEdit.iconPalette[state],1,0,0);
-        if (channel === 1) itemInEdit.iconPalette[state] = altercolor(itemInEdit.iconPalette[state],0,1,0);
-        if (channel === 2) itemInEdit.iconPalette[state] = altercolor(itemInEdit.iconPalette[state],0,0,1);
+        if (channel === 0) paletteInEdit[state] = altercolor(paletteInEdit[state],1,0,0);
+        if (channel === 1) paletteInEdit[state] = altercolor(paletteInEdit[state],0,1,0);
+        if (channel === 2) paletteInEdit[state] = altercolor(paletteInEdit[state],0,0,1);
       }
       if (keys[this.i.down] === true) {
-        if (channel === 0) itemInEdit.iconPalette[state] = altercolor(itemInEdit.iconPalette[state],-1,0,0);
-        if (channel === 1) itemInEdit.iconPalette[state] = altercolor(itemInEdit.iconPalette[state],0,-1,0);
-        if (channel === 2) itemInEdit.iconPalette[state] = altercolor(itemInEdit.iconPalette[state],0,0,-1);
+        if (channel === 0) paletteInEdit[state] = altercolor(paletteInEdit[state],-1,0,0);
+        if (channel === 1) paletteInEdit[state] = altercolor(paletteInEdit[state],0,-1,0);
+        if (channel === 2) paletteInEdit[state] = altercolor(paletteInEdit[state],0,0,-1);
       }
     }
     
@@ -849,6 +878,7 @@ function areaDis(a) {
   }
 }
 
+
 function Save() {
   var sda = {
     'name' : p1.name
@@ -860,6 +890,7 @@ function Load() {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
   }
 }
+
 
 function scrollTranslation(listPoint,scroll,listLength,disLength) {
   listLength-=disLength;
@@ -909,28 +940,113 @@ function handleboxes() {
       }
     }
 };
-function boxbutton(x,y,data) {
+
+function enterNum(num) {
+  var pkeys = [48,49,50,51,52,53,54,55,56,57];
+  var sign = 1;
+  if (num!==0) {
+    sign = (num/abs(num));
+  }
+  
+  for (var i = 0; i < pkeys.length; i ++) {
+    if (pkey[pkeys[i]] === true) {
+      return ((abs(num)*10)+i)*sign;
+    }
+  }
+  if (pkey[8] === true) {
+    return floor(abs(num)/10)*sign;
+  }
+  if (pkey[189] === true) {
+    num = -num;
+  }
+  return num;
+}
+
+function editBoxWindow(x,y,data) {
   push();
   translate(x,y);
   fill(0,0,0);
   stroke(200,200,100);
-  rect(0,0,100,50);
+  rect(0,0,300,150);
   fill(255);
   stroke(255);
-  text('sp: '+data[0],0,10);
-  text('pa: '+data[1],0,20);
-  text('ti: '+data[2],0,30);
-  text('x: '+data[4],0,40);
-  text('y: '+data[5],0,50);
-  text('vx: '+data[6],50,10);
-  text('vy: '+data[7],50,20);
-  text('ph: '+data[8],50,30);
-  text('cd: '+data[9],50,40);
-  text('dt: '+data[3],50,50);
+  translate(0,15);
+  y+=15;
+  
+  if (mouseX-x>0&&mouseY-y>0&&mouseY-y<10&&mouseX-x<300) {
+    if (enterNum(data[0])<itemInEdit.sprites.length&&enterNum(data[0])>=0) data[0] = enterNum(data[0]);
+    fill(255,255,0);
+  }
+  text('sprite ID: '+data[0],10,10);
+  fill(255);
+  
+  if (mouseX-x>0&&mouseY-y>12&&mouseY-y<22&&mouseX-x<300) {
+    if (enterNum(data[1])<itemInEdit.palettes.length&&enterNum(data[0])>=0) data[1] = enterNum(data[1]);
+    fill(255,255,0);
+  }
+  text('palette ID: '+data[1],10,22);
+  fill(255);
+  
+  if (mouseX-x>0&&mouseY-y>24&&mouseY-y<34&&mouseX-x<300) {
+    if (enterNum(data[2])>=0) data[2] = enterNum(data[2]);
+    fill(255,255,0);
+  }
+  text('when to spawn: '+data[2],10,34);
+  fill(255);
+  
+  if (mouseX-x>0&&mouseY-y>36&&mouseY-y<46&&mouseX-x<300) {
+    data[4] = enterNum(data[4]);
+    fill(255,255,0);
+  }
+  text('x-start: '+data[4],10,46);
+  fill(255);
+  
+  if (mouseX-x>0&&mouseY-y>48&&mouseY-y<58&&mouseX-x<300) {
+    data[5] = enterNum(data[5]);
+    fill(255,255,0);
+  }
+  text('y-start: '+data[5],10,58);
+  fill(255);
+  
+  if (mouseX-x>0&&mouseY-y>60&&mouseY-y<70&&mouseX-x<300) {
+    data[6] = enterNum(data[6]);
+    fill(255,255,0);
+  }
+  text('x-velocity: '+data[6],10,70);
+  fill(255);
+  
+  if (mouseX-x>0&&mouseY-y>72&&mouseY-y<82&&mouseX-x<300) {
+    data[7] = enterNum(data[7]);
+    fill(255,255,0);
+  }
+  text('y-velocity: '+data[7],10,82);
+  
+  fill(255);
+  text('affected by physics: ',10,94);
+  if (data[8] === false) fill(0,0,0);
+  else fill (255);
+  rect(textWidth('affected by physics: ')+8,84,10,10);
+  if (mouseFrame === true && mouseX-x>0&&mouseX-x<textWidth('affected by physics: ')+18&&mouseY-y>84&&mouseY-y<94) data[8] = !data[8];
+  fill(255);
+  if (mouseX-x>0&&mouseY-y>96&&mouseY-y<106&&mouseX-x<300) {
+    data[9] = enterNum(data[9]);
+    fill(255,255,0);
+  }
+  text('spawn clock offset: '+data[9],10,106);
+  fill(255);
+  if (mouseX-x>0&&mouseY-y>108&&mouseY-y<118&&mouseX-x<300) {
+    data[3] = enterNum(data[3]);
+    fill(255,255,0);
+  }
+  text('amount of time existing: '+data[3],10,118);
+  
   noStroke();
   pop();
+  return data;
 }
+
 var alt = true;
+
 function draw() {
   alt = !alt;
   if (playScreen === 'entername') {
@@ -984,6 +1100,8 @@ function draw() {
     text('fps: '+floor(frameRate()*100)/100,20,100);
   
   } else if (playScreen === 'forge') {
+    
+    // background stuff {
     background(255,255,255);
     fill(
       (sin((frameCount+0)/35)*(255/10))+(255/2),
@@ -992,20 +1110,234 @@ function draw() {
     );
     rect(0,0,400,400);
     
-    displaySprite(itemInEdit.icon,itemInEdit.iconPalette,[50,50],200,200);
-    editData(itemInEdit.icon);
     
+    //} edit Sprite & display
+    displaySprite(spriteInEdit,paletteInEdit,[50,50],200,200);
+    editData(spriteInEdit);
+    
+    
+    //sprite selector bar {
     rect(40,450,420,50);
-    
-    displaySprite(itemInEdit.icon,[color(0,0,0,0),color(0),color(255),color(255,0,0)],[5,5],55+scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400),475);
+    var spx = 55+scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400);
+    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
+        push();
+        noFill();
+        rect(spx-20,455,40,40);
+        pop();
+        
+        if (mouseIsPressed === true) {
+          spriteInEdit = itemInEdit.icon;
+        }
+      }
+    displaySprite(itemInEdit.icon,[color(0,0,0,0),color(0),color(255),color(255,0,0)],[5,5],56+floor(scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
     for (var i = 0; i < itemInEdit.sprites.length; i ++) {
       displaySprite(itemInEdit.sprites[i],[color(0,0,0,0),color(0),color(255),color(255,0,0)],[5,5],55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
+      var spx = 55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400));
+      if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
+        push();
+        noFill();
+        rect(spx-20,455,40,40);
+        pop();
+        if (pkey[8] === true&&i>0) {
+          itemInEdit.sprites.splice(i,1);
+        }
+        if (mouseIsPressed === true) {
+          spriteInEdit = itemInEdit.sprites[i];
+        }
+      }
     }
     displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400),475);
+    var spx = 55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400);
+    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
+        push();
+        noFill();
+        rect(spx-20,455,40,40);
+        pop();
+        if (mouseFrame === true) {
+          itemInEdit.sprites[itemInEdit.sprites.length] = emptySprite();
+          for (var j = 0; j < itemInEdit.sprites[itemInEdit.sprites.length-1].length; j++) {
+            for (var i = 0; i < itemInEdit.sprites[itemInEdit.sprites.length-1][j].length; i++) {
+              itemInEdit.sprites[itemInEdit.sprites.length-1][j][i] = spriteInEdit[j][i]+0;
+            }
+          }
+        }
+      }
+      
+    //} palette selector {
+     rect(40,525,420,50);
+    var spx = 55+scrollTranslation(25,mouseX-50,50*(itemInEdit.palettes.length+2),400);
+    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
+        push();
+        noFill();
+        rect(spx-20,530,40,40);
+        pop();
+        if (mouseIsPressed === true) {
+          paletteInEdit = itemInEdit.iconPalette;
+        }
+      }
+      push();
+      translate(spx-20,525);
+      fill(itemInEdit.iconPalette[1]);
+      rect(0,5,15,15);
+      fill(itemInEdit.iconPalette[2]);
+      rect(13,18,15,15);
+      fill(itemInEdit.iconPalette[3]);
+      rect(25,30,15,15);
+      
+      pop();
+    for (var i = 0; i < itemInEdit.palettes.length; i ++) {
+      var spx = 55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.palettes.length+2),400));
+      push();
+      translate(spx-20,525);
+      fill(itemInEdit.palettes[i][1]);
+      rect(0,5,15,15);
+      fill(itemInEdit.palettes[i][2]);
+      rect(13,18,15,15);
+      fill(itemInEdit.palettes[i][3]);
+      rect(25,30,15,15);
+      
+      pop();
+      if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
+        push();
+        noFill();
+        rect(spx-20,530,40,40);
+        pop();
+        if (pkey[8] === true&&i>0) {
+          itemInEdit.palettes.splice(i,1);
+        }
+        if (mouseIsPressed === true) {
+          paletteInEdit = itemInEdit.palettes[i];
+        }
+      }
+    }
+    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400),550);
+    var spx = 55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400);
+    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
+        push();
+        noFill();
+        rect(spx-20,530,40,40);
+        pop();
+        if (mouseFrame === true) {
+          itemInEdit.palettes[itemInEdit.palettes.length] = [altercolor(paletteInEdit[0],0,0,0),altercolor(paletteInEdit[1],0,0,0),altercolor(paletteInEdit[2],0,0,0),altercolor(paletteInEdit[3],0,0,0)];
+          
+        }
+      }
+      
+      //} hitbox selectors {
+      fill(
+      (sin((frameCount+0)/35)*(255/10))+(255/2),
+      (sin((frameCount+200)/35)*(255/10))+(255/2),
+      (sin((frameCount+1500)/35)*(255/10))+(255/2)
+    );
+      stroke(255);
+      rect(450,50,50,300);
+      rect(550,50,50,300);
+      rect(650,50,50,300);
+    for (var i = 0; i < itemInEdit.pboxes.length; i ++) {
+      var py = 75+scrollTranslation(i*50,mouseY-75,50*(itemInEdit.pboxes.length+1),300);
+      displaySprite(itemInEdit.sprites[itemInEdit.pboxes[i][0]],itemInEdit.palettes[itemInEdit.pboxes[i][1]],[5,5],475,py);
+      var spx = py;
+       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>450&&mouseX<500) {
+        push();
+        noFill();
+        stroke(255);
+        rect(455,spx-20,40,40);
+        pop();
+        if (pkey[8] === true) {
+          itemInEdit.pboxes.splice(i,1);
+        }
+        if (mouseFrame === true) {
+          boxInEdit = itemInEdit.pboxes[i];
+        }
+      }
+    }
+    for (var i = 0; i < itemInEdit.cboxes.length; i ++) {
+      var py = 75+scrollTranslation(i*50,mouseY-75,50*(itemInEdit.cboxes.length+1),300);
+      displaySprite(itemInEdit.sprites[itemInEdit.cboxes[i][0]],itemInEdit.palettes[itemInEdit.cboxes[i][1]],[5,5],575,py);
+      var spx = py;
+       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>550&&mouseX<600) {
+        push();
+        noFill();
+        stroke(255);
+        rect(555,spx-20,40,40);
+        pop();
+        if (pkey[8] === true) {
+          itemInEdit.cboxes.splice(i,1);
+        }
+        if (mouseFrame === true) {
+          boxInEdit = itemInEdit.cboxes[i];
+        }
+      }
+    }
+    for (var i = 0; i < itemInEdit.rboxes.length; i ++) {
+      var py = 75+scrollTranslation(i*50,mouseY-75,50*(itemInEdit.rboxes.length+1),300);
+      displaySprite(itemInEdit.sprites[itemInEdit.rboxes[i][0]],itemInEdit.palettes[itemInEdit.rboxes[i][1]],[5,5],675,py);
+      var spx = py;
+       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>650&&mouseX<700) {
+        push();
+        noFill();
+        stroke(255);
+        rect(655,spx-20,40,40);
+        pop();
+        if (pkey[8] === true) {
+          itemInEdit.rboxes.splice(i,1);
+        }
+        if (mouseFrame === true) {
+          boxInEdit = itemInEdit.rboxes[i];
+        }
+      }
+    }
+    var py = 75+scrollTranslation(itemInEdit.pboxes.length*50,mouseY-75,50*(itemInEdit.pboxes.length+1),300);
+    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],475,py);
+    var spx = py;
+       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>450&&mouseX<500) {
+        push();
+        noFill();
+        stroke(255);
+        rect(455,spx-20,40,40);
+        pop();
+        if (mouseFrame === true) {
+          itemInEdit.pboxes[itemInEdit.pboxes.length] = [0,0,1,1,35,0,0,0,false,0];
+          boxInEdit = itemInEdit.pboxes[itemInEdit.pboxes.length-1];
+        }
+      }
     
+     py = 75+scrollTranslation(itemInEdit.cboxes.length*50,mouseY-75,50*(itemInEdit.cboxes.length+1),300);
+    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],575,py);
+    var spx = py;
+       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>550&&mouseX<600) {
+        push();
+        noFill();
+        stroke(255);
+        rect(555,spx-20,40,40);
+        pop();
+        if (mouseFrame === true) {
+          itemInEdit.cboxes[itemInEdit.cboxes.length] = [0,0,1,1,35,0,0,0,false,0];
+          boxInEdit = itemInEdit.cboxes[itemInEdit.cboxes.length-1];
+        }
+      }
+    
+     py = 75+scrollTranslation(itemInEdit.rboxes.length*50,mouseY-75,50*(itemInEdit.rboxes.length+1),300);
+    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],675,py);
+    var spx = py;
+       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>650&&mouseX<700) {
+        push();
+        noFill();
+        stroke(255);
+        rect(655,spx-20,40,40);
+        pop();
+        if (mouseFrame === true) {
+          itemInEdit.rboxes[itemInEdit.rboxes.length] = [0,0,1,1,35,0,0,0,false,0];
+          boxInEdit = itemInEdit.rboxes[itemInEdit.rboxes.length-1];
+        }
+      }
+      //}hitbox editing window
+      boxInEdit = editBoxWindow(475,425,boxInEdit);
+      
+    //cursor{
     cursor('NONE');
-    stroke(255-red(itemInEdit.iconPalette[state]),255-green(itemInEdit.iconPalette[state]),255-blue(itemInEdit.iconPalette[state]),255);
-    fill(itemInEdit.iconPalette[state]);
+    stroke(255-red(paletteInEdit[state]),255-green(paletteInEdit[state]),255-blue(paletteInEdit[state]),255);
+    fill(paletteInEdit[state]);
     if (state === 0) {
       fill(
       (sin((frameCount+0)/35)*(255/10))+(255/2),
@@ -1014,11 +1346,17 @@ function draw() {
     );
     }
     
+    
+        
+    
     rect(mouseX-5,mouseY-5,10,10);
+    //}
     p1.forge();
     
+    
+    
   }
-  
+  mouseFrame = false;
   rkey = [];
   pkey = [];
   if (keys[192] === true) {
