@@ -402,6 +402,6 @@ texts['?'] = [
 
 function ntext(t,x,y,s) {
   for (var i = 0; i < t.length; i ++) {
-    if (t.toLowerCase().charAt(i)!==' ') displaySprite(texts[t.toLowerCase().charAt(i)],[color(0,0,0,0),color(0),color(255)],[s,s],x+(i*(8*s)),y);
+    if (t.toLowerCase().charAt(i)!==' ') displaySprite(texts[t.toLowerCase().charAt(i)],[[0,0,0,0],[0],[255]],[s,s],x+(i*(8*s)),y);
   }
 }
