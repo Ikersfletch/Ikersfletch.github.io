@@ -12,50 +12,10 @@ var press = true;
 var dattimer = 0;
 var hitboxes = [];
 var state;
-var spriteInEdit = [
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ],
-[0, 0, 0, 0, 0, 0, 0, 0 ]
-];
+var spriteInEdit;
 var paletteInEdit = [];
-var color = [0,0,0];
 var itemInEdit;
 var boxInEdit;
-var items = [
-  {
-    'icon' : [
-[0, 0, 0, 0, 0, 0, 2, 2, ],
-[0, 0, 0, 0, 0, 2, 2, 2, ],
-[0, 0, 0, 0, 2, 2, 2, 0, ],
-[0, 3, 0, 2, 2, 2, 0, 0, ],
-[0, 0, 3, 2, 2, 0, 0, 0, ],
-[0, 3, 1, 3, 0, 0, 0, 0, ],
-[3, 1, 3, 0, 3, 0, 0, 0, ],
-[3, 3, 0, 0, 0, 0, 0, 0, ],
-],
-    'iconPalette' : [color(0,0,0,0),color(0),color(255),color(255,0,0)],
-    'sprites' : [[
-[0, 0, 0, 0, 0, 0, 0, 0, ],
-[0, 0, 0, 0, 0, 0, 0, 0, ],
-[0, 0, 3, 0, 0, 0, 0, 0, ],
-[3, 3, 3, 2, 2, 2, 2, 2, ],
-[3, 3, 3, 1, 1, 1, 2, 2, ],
-[0, 0, 3, 0, 0, 0, 0, 0, ],
-[0, 0, 0, 0, 0, 0, 0, 0, ],
-[0, 0, 0, 0, 0, 0, 0, 0, ],
-]
-],
-    'palettes' : [[color(0,0,0,0),color(0),color(255),color(255,0,0)]],
-    'pboxes' : [[0,0,0,0,35,5,0,0,false,0],[0,0,1,0,35,5,0,0,false,0],[0,0,2,0,35,5,0,0,false,0],[0,0,3,0,35,5,0,0,false,0],[0,0,4,0,35,5,0,0,false,0],[0,0,5,0,35,5,0,0,false,0],[0,0,6,0,35,5,0,0,false,0]],
-    'cboxes' : [],
-    'rboxes' : []
-  }
-];
 var test;
 var plus;
 
@@ -81,7 +41,7 @@ function setup() {
         [1, 1, 0, 0, 0, 0, 0, 0, ],
         [1, 1, 0, 0, 0, 0, 0, 0, ],
       ],
-    'iconPalette' : [color(0,0,0,0),color(0),color(255),color(0,255,0)],
+    'iconPalette' : [[0,0,0,0],[0],[255],[0,255,0]],
     'sprites' : [
       [
         [0, 0, 0, 0, 0, 0, 0, 0, ],
@@ -103,15 +63,16 @@ function setup() {
         [0, 0, 0, 0, 0, 0, 0, 0, ]
       ]
     ],
-    'palettes' : [[color(0,0,0,0),color(0),color(255),color(0,255,0)]],
+    'palettes' : [[[0,0,0,0],[0],[255],[0,255,0]]],
     'pboxes' : [],
     'cboxes' : [[0,0,1,1,35,0,0,0,false,0],[1,0,10,100,75,0,20,0,false,0],[1,0,10,100,75,0,20,0,false,8]],
     'rboxes' : []
   };
+  spriteInEdit = itemInEdit.icon;
   test = createGraphics(40,40);
   boxInEdit = [0,0,1,1,35,0,0,0,false,0];
   state = 0;
-  paletteInEdit = [color(0,0,0,0),color(0),color(255),color(255,0,0)];
+  paletteInEdit = [[0,0,0,0],[0],[255],[255,0,0]];
   createCanvas(800,600);
   playerSprites = {
     'walking' : [
@@ -293,8 +254,8 @@ function setup() {
 ]];
   
   
-  p1 = new Player(560,40,'boy',[color(0,0,0,0),color(0,0,0),color(255, 211, 165),color(255,0,0),color(0,0,0,0)],{'left': LEFT_ARROW,'right' : RIGHT_ARROW,'down' : DOWN_ARROW,'up':UP_ARROW, 'select': SHIFT, 'start': ENTER,'a' :90 ,'b' : 88});
-  p2 = new Player(40,40,'boy',[color(0,0,0,0),color(0,0,0),color(255, 211, 165),color(255,255,0),color(0,0,0,0)],{'left': 65,'right' : 68,'down' : 83,'up':87});
+  p1 = new Player(560,40,'boy',[[0,0,0,0],[0,0,0],[255, 211, 165],[255,0,0],[0,0,0,0]],{'left': LEFT_ARROW,'right' : RIGHT_ARROW,'down' : DOWN_ARROW,'up':UP_ARROW, 'select': SHIFT, 'start': ENTER,'a' :90 ,'b' : 88});
+  
   areas = [
     [
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -334,11 +295,13 @@ function setup() {
     ]
   ];
   
-  b = createGraphics(areas[area][0].length*40,areas[area].length*40);
+  b = createGraphics(areas[area][0].length*8,areas[area].length*8);
   playScreen = 'play';
   if (localStorage.hasOwnProperty("savedata") === true) {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
     p1.name = ppos.name;
+    p1.items.a = ppos.itemA;
+    p1.items.b = ppos.itemB;
   } else {
     playScreen = 'entername';
   }
@@ -357,19 +320,6 @@ function emptySprite() {
   ];
 }
 
-function returnItem() {
-  return {
-    'icon' : [],
-    'iconPalette' : [],
-    'sprites' : [],
-    'palette' : [],
-    'pboxes' : [],
-    'cboxes' : [],
-    'rboxes' : [],
-    'anim' : 'idle'
-  };
-}
-
 function displaySprite(sprite,palette,scalar,xpos,ypos) {
   //sprite - a 2d array
   //palette - a set of four color variables in an array
@@ -383,8 +333,8 @@ function displaySprite(sprite,palette,scalar,xpos,ypos) {
   if (scalar[1]<0) translate(0,-scalar[1]*8);
   */
   scale(scalar[0],scalar[1]);
-  for (var j = 0; j < 8; j ++) for (var i = 0; i < 8; i ++) if (alpha(palette[sprite[j][i]])>0) {
-    fill(palette[sprite[j][i]]);
+  for (var j = 0; j < 8; j ++) for (var i = 0; i < 8; i ++) if (alpha(newcolor(palette[sprite[j][i]]))>0) {
+    fill(newcolor(palette[sprite[j][i]]));
     rect(i,j,1,1);
   }
   pop();
@@ -396,6 +346,8 @@ function displayTile(sprite,palette,scalar,xpos,ypos) {
   //scalar - the size of each pixel
   //xpos/ypos - the x/y coordinates (center)
   b.push();
+  b.scale(0.2);
+  b.push();
   b.noStroke();
   b.translate(xpos-scalar[0]*4,ypos-scalar[1]*4);
   /*
@@ -403,10 +355,11 @@ function displayTile(sprite,palette,scalar,xpos,ypos) {
   if (scalar[1]<0) translate(0,-scalar[1]*8);
   */
   b.scale(scalar[0],scalar[1]);
-  for (var j = 0; j < 8; j ++) for (var i = 0; i < 8; i ++) if (alpha(palette[sprite[j][i]])>0) {
-    b.fill(palette[sprite[j][i]]);
+  for (var j = 0; j < 8; j ++) for (var i = 0; i < 8; i ++) if (alpha(newcolor(palette[sprite[j][i]]))>0) {
+    b.fill(newcolor(palette[sprite[j][i]]));
     b.rect(i,j,1,1);
   }
+  b.pop();
   b.pop();
 }
 
@@ -415,7 +368,7 @@ function spriteToImage(sprite,palette) {
   img.loadPixels();
   for (var i = 0; i < 40; i++) {
     for (var j = 0; j < 40; j++) {
-      img.set(i, j, palette[sprite[floor(j/5)][floor(i/5)]]);
+      img.set(i, j, newcolor(palette[sprite[floor(j/5)][floor(i/5)]]));
     }
   }
   img.updatePixels();
@@ -432,6 +385,15 @@ function altercolor(c,rc,gc,bc) {
     if (cc[i]<0) cc[i] = 0;
   }
   return color(cc[0],cc[1],cc[2],alpha(c));
+}
+
+function newcolor(ar) {
+  if (ar.length === 1)
+  return color(ar[0],ar[0],ar[0],255);
+  if (ar.length === 3)
+  return color(ar[0],ar[1],ar[2],255);
+  if (ar.length === 4)
+  return color(ar[0],ar[1],ar[2],ar[3]);
 }
 
 function Player(x,y,type,palette,inputs) {
@@ -463,7 +425,7 @@ function Player(x,y,type,palette,inputs) {
         [1, 1, 0, 0, 0, 0, 0, 0, ],
         [1, 1, 0, 0, 0, 0, 0, 0, ],
       ],
-    'iconPalette' : [color(0,0,0,0),color(0),color(255),color(0,255,0)],
+    'iconPalette' : [[0,0,0,0],[0],[255],[0,255,0]],
     'sprites' : [
       [
         [0, 0, 0, 0, 0, 0, 0, 0, ],
@@ -485,7 +447,7 @@ function Player(x,y,type,palette,inputs) {
         [0, 0, 0, 0, 0, 0, 0, 0, ]
       ]
     ],
-    'palettes' : [[color(0,0,0,0),color(0),color(255),color(0,255,0)]],
+    'palettes' : [[[0,0,0,0],[0],[255],[0,255,0]]],
     'pboxes' : [],
     'cboxes' : [[0,0,1,1,35,0,0,0,false,0],[1,0,10,100,75,0,20,0,false,0],[1,0,10,100,75,0,20,0,false,8]],
     'rboxes' : []
@@ -501,7 +463,7 @@ function Player(x,y,type,palette,inputs) {
         [3, 1, 3, 0, 3, 0, 0, 0, ],
         [3, 3, 0, 0, 0, 0, 0, 0, ],
       ],
-      'iconPalette' : [color(0,0,0,0),color(0),color(255),color(255,0,0)],
+      'iconPalette' : [[0,0,0,0],[0],[255],[255,0,0]],
       'sprites' : [
         [
           [0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -514,7 +476,7 @@ function Player(x,y,type,palette,inputs) {
           [0, 0, 0, 0, 0, 0, 0, 0 ]
         ]
       ],
-      'palettes' : [[color(0,0,0,0),color(0),color(255),color(255,0,0)]],
+      'palettes' : [[[0,0,0,0],[0],[255],[255,0,0]]],
       'pboxes' : [[0,0,0,0,35,5,0,0,false,0],[0,0,1,0,35,5,0,0,false,0],[0,0,2,0,35,5,0,0,false,0],[0,0,3,0,35,5,0,0,false,0],[0,0,4,0,35,5,0,0,false,0],[0,0,5,0,35,5,0,0,false,0],[0,0,6,0,35,5,0,0,false,0]],
       'cboxes' : [],
       'rboxes' : []
@@ -666,8 +628,7 @@ function Player(x,y,type,palette,inputs) {
               this.dir,
               this,
               ito.pboxes[i][8],
-              spriteToImage(ito.sprites[ito.pboxes[i][0]],
-              ito.palettes[ito.pboxes[i][1]])
+              spriteToImage(ito.sprites[ito.pboxes[i][0]],ito.palettes[ito.pboxes[i][1]])
             ];
           }
         }
@@ -686,8 +647,7 @@ function Player(x,y,type,palette,inputs) {
               this.dir,
               this,
               ito.cboxes[i][8],
-              spriteToImage(ito.sprites[ito.cboxes[i][0]],
-              ito.palettes[ito.cboxes[i][1]])
+              spriteToImage(ito.sprites[ito.cboxes[i][0]],ito.palettes[ito.cboxes[i][1]])
             ];
           }
         }
@@ -712,8 +672,7 @@ function Player(x,y,type,palette,inputs) {
               this.dir,
               this,
               ito.rboxes[i][8],
-              spriteToImage(ito.sprites[ito.rboxes[i][0]],
-              ito.palettes[ito.rboxes[i][1]])
+              spriteToImage(ito.sprites[ito.rboxes[i][0]],ito.palettes[ito.rboxes[i][1]])
             ];
             
           }
@@ -745,8 +704,7 @@ function Player(x,y,type,palette,inputs) {
               this.dir,
               this,
               ito.pboxes[i][8],
-              spriteToImage(ito.sprites[ito.pboxes[i][0]],
-              ito.palettes[ito.pboxes[i][1]])
+              spriteToImage(ito.sprites[ito.pboxes[i][0]],ito.palettes[ito.pboxes[i][1]])
             ];
           }
         }
@@ -765,8 +723,7 @@ function Player(x,y,type,palette,inputs) {
               this.dir,
               this,
               ito.cboxes[i][8],
-              spriteToImage(ito.sprites[ito.cboxes[i][0]],
-              ito.palettes[ito.cboxes[i][1]])
+              spriteToImage(ito.sprites[ito.cboxes[i][0]],ito.palettes[ito.cboxes[i][1]])
             ];
           }
         }
@@ -790,8 +747,7 @@ function Player(x,y,type,palette,inputs) {
               this.dir,
               this,
               ito.rboxes[i][8],
-              spriteToImage(ito.sprites[ito.rboxes[i][0]],
-              ito.palettes[ito.rboxes[i][1]])
+              spriteToImage(ito.sprites[ito.rboxes[i][0]],ito.palettes[ito.rboxes[i][1]])
             ];
             
           }
@@ -840,26 +796,27 @@ function Player(x,y,type,palette,inputs) {
     if (pkey[this.i.select] === true) {
       playScreen = 'play';
     }
-    if (pkey[this.i.a] === true) {
-      this.items.a = itemInEdit;
-    }
     if (keys[this.i.b] === true) {
       var channel = 1;
       if (keys[this.i.left] === true) channel = 0;
       if (keys[this.i.right] === true) channel = 2;
+      
+        if (paletteInEdit[state].length === 1) paletteInEdit[state] = [paletteInEdit[state][0],paletteInEdit[state][0],paletteInEdit[state][0],255];
+        if (paletteInEdit[state].length === 3) paletteInEdit[state] = [paletteInEdit[state][0],paletteInEdit[state][1],paletteInEdit[state][2],255];
+        if (paletteInEdit[state].length === 4) paletteInEdit[state] = [paletteInEdit[state][0],paletteInEdit[state][1],paletteInEdit[state][2],paletteInEdit[state][3]];
+      
       if (keys[this.i.up] === true) {
-        if (channel === 0) paletteInEdit[state] = altercolor(paletteInEdit[state],1,0,0);
-        if (channel === 1) paletteInEdit[state] = altercolor(paletteInEdit[state],0,1,0);
-        if (channel === 2) paletteInEdit[state] = altercolor(paletteInEdit[state],0,0,1);
+        if (channel === 0) paletteInEdit[state][0]++;
+        if (channel === 1) paletteInEdit[state][1]++;
+        if (channel === 2) paletteInEdit[state][2]++;
       }
       if (keys[this.i.down] === true) {
-        if (channel === 0) paletteInEdit[state] = altercolor(paletteInEdit[state],-1,0,0);
-        if (channel === 1) paletteInEdit[state] = altercolor(paletteInEdit[state],0,-1,0);
-        if (channel === 2) paletteInEdit[state] = altercolor(paletteInEdit[state],0,0,-1);
+        if (channel === 0) paletteInEdit[state][0]--;
+        if (channel === 1) paletteInEdit[state][1]--;
+        if (channel === 2) paletteInEdit[state][2]--;
       }
     }
-    
-    
+
   };
 }
 
@@ -871,23 +828,34 @@ function areaDis(a) {
         //fill(50,255,50);
         //rect(i*40,j*40,40,40);
         
-        displayTile(tiles[area][a[j][i]],[color(50, 25, 1),color(122, 52, 2),color(255,100,4),color(0,255,0),color(0,0,0,0)],[5,5],i*40+20,j*40+20);
+        displayTile(tiles[area][a[j][i]],[[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],[5,5],i*40+20,j*40+20);
         
       }
     }
   }
 }
 
+function cloneNumArray(da) {
+  var ar = [];
+  for (var i = 0; i < da.length; i ++) {
+    ar[i] = da[i]+0;
+  }
+}
 
 function Save() {
   var sda = {
-    'name' : p1.name
+    'name' : p1.name,
+    'itemA': p1.items.a,
+    'itemB': p1.items.b
   };
   localStorage.setItem("savedata",JSON.stringify(sda));
 }
 function Load() {
   if (localStorage.hasOwnProperty("savedata") === true) {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
+    p1.name = ppos.name;
+    p1.items.a = ppos.itemA;
+    p1.items.b = ppos.itemB;
   }
 }
 
@@ -917,7 +885,7 @@ function handleboxes() {
     for (var i = 0; i < hitboxes.length; i ++) {
       
       push();
-        translate(hitboxes[i][2],hitboxes[i][3]);
+        translate(floor(hitboxes[i][2]/5)*5,floor(hitboxes[i][3]/5)*5);
         scale(hitboxes[i][6],1);
         image(hitboxes[i][9],-20,-20);
       pop();
@@ -974,49 +942,49 @@ function editBoxWindow(x,y,data) {
   y+=15;
   
   if (mouseX-x>0&&mouseY-y>0&&mouseY-y<10&&mouseX-x<300) {
-    if (enterNum(data[0])<itemInEdit.sprites.length&&enterNum(data[0])>=0) data[0] = enterNum(data[0]);
+    if (enterNum(data[0])<itemInEdit.sprites.length&&enterNum(data[0])>=0) data[0] = enterNum(data[0])+0;
     fill(255,255,0);
   }
   text('sprite ID: '+data[0],10,10);
   fill(255);
   
   if (mouseX-x>0&&mouseY-y>12&&mouseY-y<22&&mouseX-x<300) {
-    if (enterNum(data[1])<itemInEdit.palettes.length&&enterNum(data[0])>=0) data[1] = enterNum(data[1]);
+    if (enterNum(data[1])<itemInEdit.palettes.length&&enterNum(data[0])>=0) data[1] = enterNum(data[1])+0;
     fill(255,255,0);
   }
   text('palette ID: '+data[1],10,22);
   fill(255);
   
   if (mouseX-x>0&&mouseY-y>24&&mouseY-y<34&&mouseX-x<300) {
-    if (enterNum(data[2])>=0) data[2] = enterNum(data[2]);
+    if (enterNum(data[2])>=0) data[2] = enterNum(data[2])+0;
     fill(255,255,0);
   }
   text('when to spawn: '+data[2],10,34);
   fill(255);
   
   if (mouseX-x>0&&mouseY-y>36&&mouseY-y<46&&mouseX-x<300) {
-    data[4] = enterNum(data[4]);
+    data[4] = enterNum(data[4])+0;
     fill(255,255,0);
   }
   text('x-start: '+data[4],10,46);
   fill(255);
   
   if (mouseX-x>0&&mouseY-y>48&&mouseY-y<58&&mouseX-x<300) {
-    data[5] = enterNum(data[5]);
+    data[5] = enterNum(data[5])+0;
     fill(255,255,0);
   }
   text('y-start: '+data[5],10,58);
   fill(255);
   
   if (mouseX-x>0&&mouseY-y>60&&mouseY-y<70&&mouseX-x<300) {
-    data[6] = enterNum(data[6]);
+    data[6] = enterNum(data[6])+0;
     fill(255,255,0);
   }
   text('x-velocity: '+data[6],10,70);
   fill(255);
   
   if (mouseX-x>0&&mouseY-y>72&&mouseY-y<82&&mouseX-x<300) {
-    data[7] = enterNum(data[7]);
+    data[7] = enterNum(data[7]+0);
     fill(255,255,0);
   }
   text('y-velocity: '+data[7],10,82);
@@ -1029,13 +997,13 @@ function editBoxWindow(x,y,data) {
   if (mouseFrame === true && mouseX-x>0&&mouseX-x<textWidth('affected by physics: ')+18&&mouseY-y>84&&mouseY-y<94) data[8] = !data[8];
   fill(255);
   if (mouseX-x>0&&mouseY-y>96&&mouseY-y<106&&mouseX-x<300) {
-    data[9] = enterNum(data[9]);
+    data[9] = enterNum(data[9])+0;
     fill(255,255,0);
   }
   text('spawn clock offset: '+data[9],10,106);
   fill(255);
   if (mouseX-x>0&&mouseY-y>108&&mouseY-y<118&&mouseX-x<300) {
-    data[3] = enterNum(data[3]);
+    data[3] = enterNum(data[3])+0;
     fill(255,255,0);
   }
   text('amount of time existing: '+data[3],10,118);
@@ -1046,62 +1014,8 @@ function editBoxWindow(x,y,data) {
 }
 
 var alt = true;
-
-function draw() {
-  alt = !alt;
-  if (playScreen === 'entername') {
-    background(0,0,0);
-    ntext("type your name here",40,200,5);
-    ntext(p1.name,40,300,5);
-    if (keyIsPressed === true&&press === true&&keys[8]!==true&&keys[ALT]!==true&&keys[SHIFT]!==true&&keys[CONTROL]!==true&&keys[ENTER]!==true) {
-      press = false;
-      p1.name+=key;
-    } else if (keyIsPressed === false) {
-      press = true;
-    }
-    if (pkey[8] === true&&p1.name.length>0) {
-      p1.name = p1.name.substring(0,p1.name.length-1);
-    }
-    if (pkey[ENTER] === true) {
-      playScreen = 'play';
-      Save();
-    }
-  } else if (playScreen === 'play'){
-    frameRate(60);
-    push();
-    if (twoplayer === true) {
-      translate(-floor((p1.x+p2.x)/2)+width/2,0/*-p1.y+height/2*/);
-    } else {
-      translate(-p1.x+width/2,0/*-p1.y+height/2*/);
-    }
-    dattimer ++;
-    background(0);
-    if (dattimer<2) {
-      b.background(15,120,255);
-      areaDis(areag[area]);
-    }
-    image(b,0,0);
-    
-    p1.display();
-    p1.move();
-    handleboxes();
-    p1.do();
-    p1.physics();
-
-    if (twoplayer === true) {
-      p2.display();
-      p2.do();
-      p2.move();
-      p2.physics();
-    }
-    pop();
-    p1.ui();
-    fill(0,255,0);
-    text('fps: '+floor(frameRate()*100)/100,20,100);
-  
-  } else if (playScreen === 'forge') {
-    
-    // background stuff {
+function forge() {
+  // background stuff {
     background(255,255,255);
     fill(
       (sin((frameCount+0)/35)*(255/10))+(255/2),
@@ -1129,9 +1043,9 @@ function draw() {
           spriteInEdit = itemInEdit.icon;
         }
       }
-    displaySprite(itemInEdit.icon,[color(0,0,0,0),color(0),color(255),color(255,0,0)],[5,5],56+floor(scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
+    displaySprite(itemInEdit.icon,[[0,0,0,0],[0],[255],[255,0,0]],[5,5],56+floor(scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
     for (var i = 0; i < itemInEdit.sprites.length; i ++) {
-      displaySprite(itemInEdit.sprites[i],[color(0,0,0,0),color(0),color(255),color(255,0,0)],[5,5],55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
+      displaySprite(itemInEdit.sprites[i],[[0,0,0,0],[0],[255],[255,0,0]],[5,5],55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
       var spx = 55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400));
       if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
         push();
@@ -1146,7 +1060,7 @@ function draw() {
         }
       }
     }
-    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400),475);
+    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400),475);
     var spx = 55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400);
     if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
         push();
@@ -1177,11 +1091,11 @@ function draw() {
       }
       push();
       translate(spx-20,525);
-      fill(itemInEdit.iconPalette[1]);
+      fill(newcolor(itemInEdit.iconPalette[1]));
       rect(0,5,15,15);
-      fill(itemInEdit.iconPalette[2]);
+      fill(newcolor(itemInEdit.iconPalette[2]));
       rect(13,18,15,15);
-      fill(itemInEdit.iconPalette[3]);
+      fill(newcolor(itemInEdit.iconPalette[3]));
       rect(25,30,15,15);
       
       pop();
@@ -1210,7 +1124,7 @@ function draw() {
         }
       }
     }
-    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400),550);
+    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400),550);
     var spx = 55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400);
     if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
         push();
@@ -1218,7 +1132,7 @@ function draw() {
         rect(spx-20,530,40,40);
         pop();
         if (mouseFrame === true) {
-          itemInEdit.palettes[itemInEdit.palettes.length] = [altercolor(paletteInEdit[0],0,0,0),altercolor(paletteInEdit[1],0,0,0),altercolor(paletteInEdit[2],0,0,0),altercolor(paletteInEdit[3],0,0,0)];
+          itemInEdit.palettes[itemInEdit.palettes.length] = [[0,0,0,0],[0],[255],[255,0,0]];
           
         }
       }
@@ -1288,7 +1202,7 @@ function draw() {
       }
     }
     var py = 75+scrollTranslation(itemInEdit.pboxes.length*50,mouseY-75,50*(itemInEdit.pboxes.length+1),300);
-    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],475,py);
+    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],475,py);
     var spx = py;
        if (mouseY<spx+20&&mouseY>spx-20&&mouseX>450&&mouseX<500) {
         push();
@@ -1303,7 +1217,7 @@ function draw() {
       }
     
      py = 75+scrollTranslation(itemInEdit.cboxes.length*50,mouseY-75,50*(itemInEdit.cboxes.length+1),300);
-    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],575,py);
+    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],575,py);
     var spx = py;
        if (mouseY<spx+20&&mouseY>spx-20&&mouseX>550&&mouseX<600) {
         push();
@@ -1318,7 +1232,7 @@ function draw() {
       }
     
      py = 75+scrollTranslation(itemInEdit.rboxes.length*50,mouseY-75,50*(itemInEdit.rboxes.length+1),300);
-    displaySprite(plus,[color(0,0,0,0),color(0),color(255),color(0,255,0)],[5,5],675,py);
+    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],675,py);
     var spx = py;
        if (mouseY<spx+20&&mouseY>spx-20&&mouseX>650&&mouseX<700) {
         push();
@@ -1332,8 +1246,45 @@ function draw() {
         }
       }
       //}hitbox editing window
+      fill(255);
+      rect(445,350,300,300);
+      rect(400,0,500,50);
+      rect(0,400,50,500);
       boxInEdit = editBoxWindow(475,425,boxInEdit);
       
+    //equip to slot {
+    fill(
+      (sin((frameCount+0)/35)*(255/10))+(255/2),
+      (sin((frameCount+200)/35)*(255/10))+(255/2),
+      (sin((frameCount+1500)/35)*(255/10))+(255/2)
+    );
+    rect(750,50,50,100);
+    rect(750,250,50,100);
+    ntext('b',775,125,5);
+    ntext('a',775,325,5);
+    displaySprite(p1.items.b.icon,p1.items.b.iconPalette,[5,5],775,75);
+    displaySprite(p1.items.a.icon,p1.items.a.iconPalette,[5,5],775,275);
+    if (mouseFrame===true) {
+      if (mouseX>750) {
+        if (mouseY>50&&mouseY<150) {
+          p1.items.b = JSON.parse(JSON.stringify(itemInEdit));
+        }
+        if (mouseY>250&&mouseY<350) {
+          p1.items.a = JSON.parse(JSON.stringify(itemInEdit));
+        }
+      }
+    }
+    if (pkey[32]===true) {
+      if (mouseX>750) {
+        if (mouseY>50&&mouseY<150) {
+          itemInEdit = JSON.parse(JSON.stringify(p1.items.b));
+        }
+        if (mouseY>250&&mouseY<350) {
+          itemInEdit = JSON.parse(JSON.stringify(p1.items.a));
+        }
+      }
+    }
+  //}
     //cursor{
     cursor('NONE');
     stroke(255-red(paletteInEdit[state]),255-green(paletteInEdit[state]),255-blue(paletteInEdit[state]),255);
@@ -1355,11 +1306,68 @@ function draw() {
     
     
     
+}
+function draw() {
+  noSmooth();
+  alt = !alt;
+  if (playScreen === 'entername') {
+    background(0,0,0);
+    ntext("type your name here",40,200,5);
+    ntext(p1.name,40,300,5);
+    if (p1.name.length<10&&keyIsPressed === true&&press === true&&keys[8]!==true&&keys[ALT]!==true&&keys[SHIFT]!==true&&keys[CONTROL]!==true&&keys[ENTER]!==true) {
+      press = false;
+      p1.name+=key;
+    } else if (keyIsPressed === false) {
+      press = true;
+    }
+    if (pkey[8] === true&&p1.name.length>0) {
+      p1.name = p1.name.substring(0,p1.name.length-1);
+    }
+    if (pkey[ENTER] === true) {
+      playScreen = 'play';
+      Save();
+    }
+  } else if (playScreen === 'play'){
+    frameRate(60);
+    push();
+    if (twoplayer === true) {
+      translate(-floor((p1.x+p2.x)/2)+width/2,0/*-p1.y+height/2*/);
+    } else {
+      translate(-p1.x+width/2,0/*-p1.y+height/2*/);
+    }
+    dattimer ++;
+    background(0);
+    if (dattimer<2) {
+      b.background(15,120,255);
+      areaDis(areag[area]);
+    }
+    push();
+    scale(5);
+    image(b,0,0);
+    pop();
+    p1.display();
+    p1.move();
+    handleboxes();
+    p1.do();
+    p1.physics();
+
+    
+    pop();
+    p1.ui();
+    fill(0,255,0);
+    text('fps: '+floor(frameRate()*100)/100,20,100);
+  
+  } else if (playScreen === 'forge') {
+    forge();
   }
   mouseFrame = false;
-  rkey = [];
-  pkey = [];
   if (keys[192] === true) {
     localStorage.removeItem("savedata");
   }
+  if (pkey[27] === true) {
+    Save();
+  }
+  rkey = [];
+  pkey = [];
+  
 }
