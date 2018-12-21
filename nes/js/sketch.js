@@ -300,8 +300,8 @@ function setup() {
   if (localStorage.hasOwnProperty("savedata") === true) {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
     p1.name = ppos.name;
-    p1.items.a = ppos.itemA;
-    p1.items.b = ppos.itemB;
+    if (ppos.hasOwnProperty("itemA")) p1.items.a = ppos.itemA;
+    if (ppos.hasOwnProperty("itemB")) p1.items.b = ppos.itemB;
   } else {
     playScreen = 'entername';
   }
