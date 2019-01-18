@@ -20,11 +20,11 @@ function setup() {
   }
   layer = [color(0,200,0),color(130, 94, 0),color(150),color(130),color(110),color(90),color(70),color(50),color(30),color(10),color(0),color(20,0,0),color(40,0,0),color(60,0,0),color(80,0,0),color(100,0,0),color(120,0,0),color(140,0,0)];
   angleMode(DEGREES);
-  els['none'] = color(0,0,0);
-  els['water'] = color(0,0,255);
-  els['fire'] = color(255,0,0);
-  els['thunder'] = color(255,255,0);
-  els['cloud'] = color(255);
+  els.none = color(0,0,0);
+  els.water = color(0,0,255);
+  els.fire = color(255,0,0);
+  els.thunder = color(255,255,0);
+  els.cloud = color(255);
 }
 function Player(x,y,z) {
   this.x = x;
@@ -135,7 +135,6 @@ function Dust(x,y,z,l) {
   this.falling = true;
   this.ontop = false;
   this.element = 'none';
-  this.tc = 0;
   this.display = function() {
     d3.strokeWeight(3);
     d3.push();
@@ -165,33 +164,40 @@ function Dust(x,y,z,l) {
     d3.pop();
   };
   var p = this;
-  this.elementDo = [];
-  this.elementDo['water'] = function() {
+  this.elementDo = {
+    'tc' : 0,
+    'ft' : 0,
+    'water' : function() {
     
-  };
-  this.elementDo['fire'] = function() {
+    },
+    'fire' : function() {
     
-  };
-  
-  this.elementDo['thunder'] = function() {
+    },
+    'thunder' : function() {
     
-  };
-  this.elementDo['cloud'] = function() {
+    },
+    'cloud' : function() {
     
-  };
-  this.elementDo['none'] = function() {
-    if (p.z<=100&&(p.x>=500||p.y>=500||p.x<-500||p.y<-500)) {
-      p.element = 'water';
+    },
+    'none' : function() {
+      if (p.z<=100&&(p.x>=500||p.y>=500||p.x<-500||p.y<-500)) {
+        p.element = 'water';
+      }
+      if (p.tou === true) {
+        if (p1.v>0) this.tc++;
+        if (this.tc>50) p.element = 'thunder';
+      } else if (this.tc>0) this.tc --;
+      if (p.falling === true&&frameCount>115) this.ft ++;
+      else if (this.ft>0) this.ft --;
+      if  (this.ft>45) p.element = 'fire';
+      
     }
-    if (p.tou === true) {
-      if (p1.v>0) p.tc++;
-      if (p.tc>50) p.element = 'thunder';
-    } else if (p.tc>0) p.tc --;
   };
   this.logic = function() {
     if (this.z>0&&this.falling === true) {
       this.z-=10;
     }
+    if (this.z<=0||this.element === 'cloud') this.falling = false;
     this.selected = false;
     this.tou = false;
     if (this.carried === false&&abs(p1.x-(this.x+25))<=35&&abs(p1.y-(this.y+25))<=35&&p1.z<=this.z+50&&p1.z>this.z-25) {
@@ -241,6 +247,7 @@ function Dust(x,y,z,l) {
       this.x = floor((p1.x+(p1.d[0]*5))/50)*50;
       this.y = floor((p1.y+(p1.d[1]*5))/50)*50;
       this.z = floor(this.z/50)*50+100;
+      if (this.element==='cloud') this.z-=90;
       p1.carrying = false;
     }
     if (pkey[81]===true&&this.carried === true) {
@@ -283,8 +290,10 @@ function doDust() {
         if (frameCount<115) {
           dust[j].l = dust[i].l+1;
         } else if ( dust[i].element === dust[j].element && dust[j].l === dust[i].l) {
-          dust[j].l = dust[i].l+1;
+          dust[j].l ++;
           dust[i].alive = false;
+        } else if (dust[j].element === 'fire'&&dust[i].element==='water') {
+          dust[i].element = 'cloud';
         }
       }
     }
@@ -392,6 +401,7 @@ function Pause() {
     paused = !paused;
   }
   if (paused === true) {
+    image(d3,0,0);
     fill(0,0,0,150);
     rect(-10,-10,width+20,height+20);
     textAlign(CENTER);
@@ -421,7 +431,7 @@ function draw() {
   }
   }
   image(d3,0,0);
-  if (tutorial <= 6) tufu(["Welcome to powder!","Rotate camera with the arrow keys","Focus camera with \'C\'","Move using WASD\npress SPACE to jump","press and hold SHIFT to pick up blocks","When you pick up a block, you can see the density\nplace two blocks of the same density on top of\neach other to merge them and double the density"]);
+  if (tutorial <= 6) tufu(["Welcome to powder!","Rotate camera with the arrow keys","Focus camera with \'C\'","Move using WASD\npress SPACE to jump","press and hold SHIFT to pick up blocks","When you pick up a block, you can see the density\nplace two blocks of the same density on top of\neach other to merge them and double the density","While holding a block, press Q to split it.\n If it is density 1, it will get\nrid of the element."]);
   else Pause();
   UI();
   d3.pop();
