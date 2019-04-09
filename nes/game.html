@@ -16,6 +16,9 @@
     
 </style>
 <script>
+  window.onbeforeunload = function () {//Prevent Ctrl+W
+      return "Really want to quit the game?";
+  };
   window.addEventListener("keydown", function(e) {
     // space and arrow keys
     if([32, 37, 38, 39, 40,17].indexOf(e.keyCode) > -1) {
@@ -28,6 +31,8 @@
 <script src="js/p5.min.js"></script>
 <script src="js/keys.js"></script>
 <script src="js/text.js"></script>
+<script src="js/itemCloset.js"></script>
+<script src="js/player.js"></script>
 <script src="js/sketch.js"></script>
 
 
