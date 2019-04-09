@@ -3,6 +3,7 @@ var pkey = [];
 var rkey = [];
 var whichKey = null;
 var mouseFrame = false;
+var rkeyFrame = false;
 mousePressed = function() {
   mouseFrame = false;
   if (mouseIsPressed === true) {
@@ -10,28 +11,29 @@ mousePressed = function() {
   }
 }
 keyPressed = function() {
-    pkey[keyCode]  = 0;
+    var c  = 0;
     if (keys[keyCode] === false) {
-      pkey[keyCode]  ++;
+      c  ++;
     }
     keys[keyCode] = true;
     whichKey = keyCode;
     if (keys[keyCode] === true) {
-      pkey[keyCode] ++;
+      c ++;
     }
-    if (pkey[keyCode] === 2) {pkey[keyCode] = true;} else {pkey[keyCode] = false;}
+    if (c === 2) {pkey[keyCode] = true;} else {pkey[keyCode] = false;}
 };
 keyReleased = function() {
-    rkey[keyCode] = 0;
+    var c = 0;
     if (keys[keyCode] === true) {
-      rkey[keyCode] ++;
+      c++;
     }
     keys[keyCode] = false;
     whichKey = null;
+    rkeyFrame = true;
     if (keys[keyCode] === false) {
-      rkey[keyCode] ++;
+      c++;
     }
-    if (rkey[keyCode] === 2) {rkey[keyCode] = true;} else {rkey[keyCode] = false;}
+    if (c === 2) {rkey[keyCode] = true;} else {rkey[keyCode] = false;}
 };
 function rotateIt(cx, cy, x, y, angle) {
     var radians = (Math.PI / 180) * angle,

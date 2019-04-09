@@ -1,8 +1,8 @@
+
 var playerSprites;
 var tile;
 var p1;
 var p2;
-var areas;
 var area = 0;
 var b;
 var ppos;
@@ -18,6 +18,12 @@ var itemInEdit;
 var boxInEdit;
 var test;
 var plus;
+var frames = [];
+var targetDummy;
+var dum1;
+var areas;
+
+
 
 function setup() {
   plus = [
@@ -30,45 +36,6 @@ function setup() {
         [0,0,0,3,3,0,0,0],
         [0,0,0,0,0,0,0,0],
 ];
-  itemInEdit = {
-      'icon' : [
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 3, 3, 1, 2, 2, 2, 1, ],
-        [1, 3, 3, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ],
-      ],
-    'iconPalette' : [[0,0,0,0],[0],[255],[0,255,0]],
-    'sprites' : [
-      [
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 3, 3, 1, 2, 2, 2, 1, ],
-        [1, 3, 3, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ]
-      ],[
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 3, 3, 3, 3, 3, 0, 0, ],
-        [0, 0, 3, 2, 2, 3, 3, 0, ],
-        [0, 0, 0, 3, 2, 2, 3, 3, ],
-        [0, 0, 0, 3, 2, 2, 3, 3, ],
-        [0, 0, 3, 2, 2, 3, 3, 0, ],
-        [0, 3, 3, 3, 3, 3, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, ]
-      ]
-    ],
-    'palettes' : [[[0,0,0,0],[0],[255],[0,255,0]]],
-    'pboxes' : [],
-    'cboxes' : [[0,0,1,1,35,0,0,0,false,0],[1,0,10,100,75,0,20,0,false,0],[1,0,10,100,75,0,20,0,false,8]],
-    'rboxes' : []
-  };
-  spriteInEdit = itemInEdit.icon;
   test = createGraphics(40,40);
   boxInEdit = [0,0,1,1,35,0,0,0,false,0];
   state = 0;
@@ -188,6 +155,7 @@ function setup() {
       ]
     ]
   };
+  
   tiles = [[
     [],
     [
@@ -256,8 +224,86 @@ function setup() {
   
   p1 = new Player(560,40,'boy',[[0,0,0,0],[0,0,0],[255, 211, 165],[255,0,0],[0,0,0,0]],{'left': LEFT_ARROW,'right' : RIGHT_ARROW,'down' : DOWN_ARROW,'up':UP_ARROW, 'select': SHIFT, 'start': ENTER,'a' :90 ,'b' : 88});
   
+  
   areas = [
+  {
+    'palettes' : [
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],
+      [[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]]
+    ],
+    'sprites' : [
+    [],
     [
+    [3, 3, 3, 3, 3, 3, 3, 3 ],
+    [3, 3, 3, 3, 3, 3, 3, 3 ],
+    [1, 1, 3, 3, 1, 1, 3, 3 ],
+    [2, 1, 1, 1, 1, 1, 1, 1 ],
+    [1, 1, 1, 1, 2, 1, 1, 2 ],
+    [1, 2, 1, 1, 1, 1, 1, 1 ],
+    [1, 1, 1, 2, 1, 1, 1, 1 ],
+    [2, 1, 1, 1, 1, 1, 2, 1 ]
+    ],
+    [
+    [1, 1, 1, 1, 1, 1, 1, 1, ],
+    [1, 1, 2, 1, 1, 1, 1, 1, ],
+    [1, 1, 1, 1, 1, 2, 1, 1, ],
+    [2, 1, 1, 1, 1, 1, 1, 1, ],
+    [1, 1, 1, 1, 2, 1, 1, 2, ],
+    [1, 2, 1, 1, 1, 1, 1, 1, ],
+    [1, 1, 1, 2, 1, 1, 1, 1, ],
+    [2, 1, 1, 1, 1, 1, 2, 1, ],
+  ],
+    [
+    [0, 0, 0, 0, 0, 0, 0, 0, ],
+    [0, 0, 1, 0, 0, 0, 0, 0, ],
+    [0, 0, 0, 0, 0, 1, 0, 0, ],
+    [1, 0, 0, 0, 0, 0, 0, 0, ],
+    [0, 0, 0, 0, 1, 0, 0, 1, ],
+    [0, 1, 0, 0, 0, 0, 0, 0, ],
+    [0, 0, 0, 1, 0, 0, 0, 0, ],
+    [1, 0, 0, 0, 0, 0, 1, 0, ],
+  ],
+    [
+    [3, 3, 3, 3, 3, 3, 3, 3 ],
+    [3, 3, 3, 3, 3, 3, 3, 3 ],
+    [0, 0, 3, 3, 0, 0, 3, 3 ],
+    [1, 0, 0, 0, 0, 0, 0, 0 ],
+    [0, 0, 0, 0, 1, 0, 0, 1 ],
+    [0, 1, 0, 0, 0, 0, 0, 0 ],
+    [0, 0, 0, 1, 0, 0, 0, 0 ],
+    [1, 0, 0, 0, 0, 0, 1, 0 ]],
+    [
+      [4, 4, 4, 4, 4, 4, 4, 4, ],
+      [4, 4, 4, 4, 4, 4, 4, 4, ],
+      [4, 4, 4, 4, 4, 1, 1, 4, ],
+      [4, 4, 4, 4, 1, 3, 1, 4, ],
+      [1, 1, 4, 1, 3, 1, 4, 4, ],
+      [1, 3, 1, 1, 3, 1, 1, 1, ],
+      [4, 1, 3, 1, 1, 1, 3, 1, ],
+      [4, 1, 3, 3, 1, 3, 1, 4, ],
+    ],
+    [
+      [4,1,4,4,4,1,4,4],
+      [1,2,1,4,1,2,1,4],
+      [1,2,1,1,1,2,1,1],
+      [1,2,1,2,1,2,1,2],
+      [1,2,1,2,1,2,1,2],
+      [1,2,1,2,1,2,1,2],
+      [1,2,1,2,1,2,1,2],
+      [1,2,1,2,1,2,1,2],
+    ]
+
+
+],
+    'collision' : [
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -273,10 +319,8 @@ function setup() {
       [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0],
       [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,3,3,3,3,3,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0],
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-    ]
-  ];
-  areag = [
-    [
+    ],
+    'graphics' : [
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -293,19 +337,25 @@ function setup() {
       [0,0,0,0,0,5,0,0,0,2,3,3,3,3,3,2,2,6,6,6,6,6,2,2,2,2,3,3,0,0,1,2,2,2,2,2,2,2,0,0],
       [1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,1,1]
     ]
-  ];
+  }
   
-  b = createGraphics(areas[area][0].length*8,areas[area].length*8);
+  ];
+  b = createGraphics(areas[area].graphics[0].length*8,areas[area].graphics.length*8);
   playScreen = 'play';
   if (localStorage.hasOwnProperty("savedata") === true) {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
     p1.name = ppos.name;
-    if (ppos.hasOwnProperty("itemA")) p1.items.a = ppos.itemA;
-    if (ppos.hasOwnProperty("itemB")) p1.items.b = ppos.itemB;
+    p1.items.a = ppos.itemA;
+    p1.items.b = ppos.itemB;
+    if (ppos.hasOwnProperty("controller")) p1.i = ppos.controller;
   } else {
-    playScreen = 'entername';
+    playScreen = 'map-controls';
   }
+  
+  dum1 = [ new Dummy(500,100),new Dummy(600,100),new Dummy(700,100),new Dummy(800,100),new Dummy(500,100),new Dummy(600,100),new Dummy(700,100),new Dummy(800,100),new Dummy(500,100),new Dummy(600,100),new Dummy(700,100),new Dummy(800,100),new Dummy(500,100),new Dummy(600,100),new Dummy(700,100),new Dummy(800,100) ];
+  //  dum1 = [];
 }
+
 
 function emptySprite() {
   return [
@@ -318,6 +368,69 @@ function emptySprite() {
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
   ];
+}
+function emptyBox() {
+  return {
+    'spriteID' : 0,
+    'paletteID' : 0,
+    'conditions' : {
+      'keyPress' : 'onPress',
+      'delay' : 1,
+      'clockSize' : 4,
+      'holdTime' : 0,
+      'maxHoldTime': 0,
+      'mustBeInAir' : false,
+      'mustBeOnGround' : false
+    },
+    'moveSelf' : {
+      'x' : 30,
+      'y' : 5,
+      'v' : {
+        'x' : 3,
+        'y' : -5
+      },
+      'isSticky' : true,
+      'doGravity' : false,
+      'doPhysics' : false,
+      'stickInTiles' : false
+    },
+    'hit' : {
+      'damage' : 10,
+      'friendlyFire' : false,
+      'knockback' : 0,
+      'knockV' : {
+        'x' : 0,
+        'y' : 0
+      },
+      'effect' : 'none',
+      'friendlyEffect' : false,
+      'strength' : 0,
+      'duration' : 0,
+      'chance' : 0
+    },
+    'movePlayer' : {
+      'freezePlayer' : false,
+      'preventOtherItems' : false,
+      'addV' : {
+        'x' : 0,
+        'y' : 0
+      },
+      'addVelocityWhen' : 'never',
+      'addVClock' : 0,
+      'setV' : {
+        'x' : 0,
+        'y' : 0
+      },
+      'setVelocityWhen' : 'never',
+      'setVClock' : 0
+    },
+    'death' : {
+      'summon' : [],
+      'timeToLive' : 6,
+      'dieIfNotHeld' : false,
+      'deathOnContact' : false
+    }
+  };
 }
 
 function displaySprite(sprite,palette,scalar,xpos,ypos) {
@@ -396,449 +509,230 @@ function newcolor(ar) {
   return color(ar[0],ar[1],ar[2],ar[3]);
 }
 
-function Player(x,y,type,palette,inputs) {
-  this.x = x; // position along x-axis
-  this.y = y; // position along y-axis
+function boxCost(box) {
+  var cost = 0;
+  cost+=abs(box.hit.damage)/3;
+  cost+=abs(box.hit.strength)*box.hit.chance;
+  cost+=abs(box.hit.knockback);
+  cost+=box.hit.duration*box.hit.chance;
+  cost+=abs(box.movePlayer.addV.x)/2;
+  cost+=abs(box.movePlayer.addV.y)/4;
+  cost+=abs(box.movePlayer.setV.x)/4;
+  cost+=abs(box.movePlayer.setV.y)/2;
+  cost+=dist(box.moveSelf.x,box.moveSelf.y,0,0)/20;
+  cost+=dist(box.moveSelf.v.x,box.moveSelf.v.y,0,0)/20;
+  
+  if (box.movePlayer.freezePlayer) cost*= 0.85/(box.death.timeToLive/5);
+  if (box.movePlayer.preventOtherItems) cost*= 0.95/(box.death.timeToLive/5);
+  if (box.death.deathOnContact) cost*=0.95;
+  if (box.hit.friendlyFire) cost*=0.6;
+  
+  return ceil(cost);
+}
+
+function numIf(number, condition) {
+  if (condition) return number;
+  return 0;
+}
+
+function isHit(x,y) {
+  for (var i = 0; i < hitboxes.length; i ++) {
+    var box = hitboxes[i];
+    if (dist(box.moveSelf.x,box.moveSelf.y,x,y)<40) {
+      return {
+        'hit' : true,
+        'damage' : box.hit.damage,
+        'knockback' : box.hit.knockback,
+        'v' : {
+          'x' : box.hit.knockV.x+numIf(box.moveSelf.v.x,box.moveSelf.doPhysics),
+          'y' : box.hit.knockV.y+numIf(box.moveSelf.v.y,box.moveSelf.doPhysics)
+        },
+        'effect' : {
+          'type' : box.hit.effect,
+          'duration' : box.hit.duration,
+          'chance' : box.hit.chance
+        }
+      };
+    }
+  }
+  return {
+    'hit' : false,
+    'damage' : 0,
+    'knockback' : 0,
+    'v' : {
+      'x': 0,
+      'y': 0
+    },
+    'effect' : {
+      'type' : 'none',
+      'duration' : 0,
+      'chance' : 0
+    }
+  };
+}
+
+
+function Dummy(x,y) {
+  
+  this.x = x;
+  this.y = y;
   this.v = {
     'x' : 0,
     'y' : 0
-  }; // JSON vector for velocity
-  this.t = type;
-  this.p = palette; // array of four colors
-  this.i = inputs; // JSON of keycodes
-  this.sprites = playerSprites;
-  this.allowMove = [true,true];
+  };
+  this.onGround = false;
   this.dir = 1;
-  this.inAir = true;
-  this.alternating = true;
-  this.timer = 1;
-  this.recovery = false;
-  this.items = {
-    'a' : {
-      'icon' : [
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 3, 3, 1, 2, 2, 2, 1, ],
-        [1, 3, 3, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ],
-      ],
-    'iconPalette' : [[0,0,0,0],[0],[255],[0,255,0]],
-    'sprites' : [
-      [
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 3, 3, 1, 2, 2, 2, 1, ],
-        [1, 3, 3, 1, 1, 1, 1, 1, ],
-        [1, 1, 1, 1, 1, 1, 1, 1, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ],
-        [1, 1, 0, 0, 0, 0, 0, 0, ]
-      ],[
-        [0, 0, 0, 0, 0, 0, 0, 0, ],
-        [0, 3, 3, 3, 3, 3, 0, 0, ],
-        [0, 0, 3, 2, 2, 3, 3, 0, ],
-        [0, 0, 0, 3, 2, 2, 3, 3, ],
-        [0, 0, 0, 3, 2, 2, 3, 3, ],
-        [0, 0, 3, 2, 2, 3, 3, 0, ],
-        [0, 3, 3, 3, 3, 3, 0, 0, ],
-        [0, 0, 0, 0, 0, 0, 0, 0, ]
-      ]
+  this.alternating;
+  this.tryJump = false;
+  this.palette = [[0,0,0,0],[255,0,0,255],[0,0,0,255],[0,0,0,255]]
+  this.sprites ={
+    'walking' : [
+      spriteToImage(playerSprites.walking[0],this.palette),
+      spriteToImage(playerSprites.walking[1],this.palette),
+      spriteToImage(playerSprites.walking[2],this.palette),
+      spriteToImage(playerSprites.walking[3],this.palette)
     ],
-    'palettes' : [[[0,0,0,0],[0],[255],[0,255,0]]],
-    'pboxes' : [],
-    'cboxes' : [[0,0,1,1,35,0,0,0,false,0],[1,0,10,100,75,0,20,0,false,0],[1,0,10,100,75,0,20,0,false,8]],
-    'rboxes' : []
-  },
-    'b' : {
-      'icon' : [
-        [0, 0, 0, 0, 0, 0, 2, 2, ],
-        [0, 0, 0, 0, 0, 2, 2, 2, ],
-        [0, 0, 0, 0, 2, 2, 2, 0, ],
-        [0, 3, 0, 2, 2, 2, 0, 0, ],
-        [0, 0, 3, 2, 2, 0, 0, 0, ],
-        [0, 3, 1, 3, 0, 0, 0, 0, ],
-        [3, 1, 3, 0, 3, 0, 0, 0, ],
-        [3, 3, 0, 0, 0, 0, 0, 0, ],
-      ],
-      'iconPalette' : [[0,0,0,0],[0],[255],[255,0,0]],
-      'sprites' : [
-        [
-          [0, 0, 0, 0, 0, 0, 0, 0 ],
-          [0, 0, 0, 0, 0, 0, 0, 0 ],
-          [0, 0, 3, 0, 0, 0, 0, 0 ],
-          [3, 3, 3, 2, 2, 2, 2, 2 ],
-          [3, 3, 3, 2, 2, 2, 2, 2 ],
-          [0, 0, 3, 0, 0, 0, 0, 0 ],
-          [0, 0, 0, 0, 0, 0, 0, 0 ],
-          [0, 0, 0, 0, 0, 0, 0, 0 ]
-        ]
-      ],
-      'palettes' : [[[0,0,0,0],[0],[255],[255,0,0]]],
-      'pboxes' : [[0,0,0,0,35,5,0,0,false,0],[0,0,1,0,35,5,0,0,false,0],[0,0,2,0,35,5,0,0,false,0],[0,0,3,0,35,5,0,0,false,0],[0,0,4,0,35,5,0,0,false,0],[0,0,5,0,35,5,0,0,false,0],[0,0,6,0,35,5,0,0,false,0]],
-      'cboxes' : [],
-      'rboxes' : []
-    },
-    'atime' : 0,
-    'btime' : 0,
-    'btimer' : 0,
-    'atimer' : 0,
+    'swinging' : [
+      spriteToImage(playerSprites.swinging[0],this.palette),
+      spriteToImage(playerSprites.swinging[1],this.palette),
+      spriteToImage(playerSprites.swinging[2],this.palette),
+      spriteToImage(playerSprites.swinging[3],this.palette)
+      
+    ],
+    'falling' : [
+      
+      spriteToImage(playerSprites.falling[0],this.palette)
+    ],
+    'sprinting' : [
+      
+      spriteToImage(playerSprites.sprinting[0],this.palette),
+      spriteToImage(playerSprites.sprinting[1],this.palette)
+    ]
   };
-  this.stats = {
-    'speed' : 5,
-    'jump' : -15,
-    'heal' : 100,
-    'stam' : 30,
-    'health' : 50,
-    'stamMax' : 100,
-    'healthMax' : 100
+  this.animState = 'idle';
+  this.tar = {
+    'x' : this.x+0,
+    'y' : this.y+0
   };
-  this.name = '';
   this.display = function() {
+    push();
+    translate(this.x,this.y);
+    scale(this.dir,1);
     if (this.animState === 'sprintItem') {
-      displaySprite(playerSprites.sprinting[(floor(frameCount*0.2)%2)],this.p,[5*this.dir,5],this.x,this.y);
-    } else if (this.inAir === true) {
-      displaySprite(playerSprites.falling[0],this.p,[5*this.dir,5],this.x,this.y);
+      image(this.sprites.sprinting[(floor(frameCount*0.2)%2)],-20,-20);
+    } else if (!this.onGround) {
+      image(this.sprites.falling[0],-20,-20);
     } else if (this.animState === 'idle') {
-      displaySprite(playerSprites.walking[0],this.p,[5*this.dir,5],this.x,this.y);
+      image(this.sprites.walking[0],-20,-20);
     } else if (this.animState === 'walk') {
-      displaySprite(playerSprites.walking[(floor(frameCount*0.2)%4)],this.p,[5*this.dir,5],this.x,this.y);
+      image(this.sprites.walking[(floor(frameCount*0.2)%4)],-20,-20);
     } else if (this.animState === 'sprint') {
-      displaySprite(playerSprites.sprinting[(floor(frameCount*0.2)%2)],this.p,[5*this.dir,5],this.x,this.y);
+      image(this.sprites.sprinting[(floor(frameCount*0.2)%2)],-20,-20);
     }
-    
-  };
-  this.move = function() {
-    this.animState = 'idle';
-    
-    if (keys[this.i.down] === true) {
-      this.stats.speed = 10;
-    } else {
-      this.stats.speed = 5;
-    }
-    if (this.allowMove[0]===true&&keys[this.i.left] === true) {
-      this.animState = 'walk';
-      this.dir = -1;
-      this.x-=this.stats.speed;
-    }
-    if (this.allowMove[1]===true&&keys[this.i.right] === true) {
-      this.animState = 'walk';
-      this.dir = 1;
-      this.x+=this.stats.speed;
-    }
-    if (keys[this.i.down] === true) {
-      this.animState = 'sprint';
-    }
-    if (this.alternating === true&&keys[this.i.select] === true) if (this.recovery ===false&&this.stats.stam>0&&this.stats.health<this.stats.healthMax) {
-        this.stats.stam-=2;
-        this.stats.health+=0.5;
-      }
-    /*if (this.animState === 'idle'&&keys[this.i.right]!==true&&keys[this.i.left]!==true) {
-      this.x = floor((this.x)/40)*40+20;
-    }*/
+    pop();
+    //ellipse(this.x,this.y,10,10);
   };
   this.physics = function() {
-    // gravity changes velocity
+    this.tryJump = false;
+    this.onGround = false;
+    if (this.x<0) this.x = 5;
+    if (this.x>40*areas[area].collision[0].length) this.x = 40*areas[area].collision[0].length-1;
+    if (this.y>areas[area].collision.length*40) this.y = 0;
     this.alternating = !this.alternating;
     if (this.alternating ===true && this.v.y<15) {
-      this.v.y +=1;
-      if (keys[this.i.up]!==true) {
-        this.v.y++;
-      }
+      this.v.y +=2;
     }
     
-    this.allowMove = [true,true];
-    this.inAir = true;
-    if (this.y<40*areas[area].length&&this.y>0&&this.x<40*areas[area][0].length&&this.x>0) {
-      if (this.y<((40*areas[area].length)-40)&&areas[area][floor((this.y+20)/40)][floor(this.x/40)] > 0&&this.v.y>=0) {
-        if (areas[area][floor((this.y+20)/40)][floor(this.x/40)] < 3) {
+    if (this.y<40*areas[area].collision.length&&this.y>0&&this.x<40*areas[area].collision[0].length&&this.x>0) {
+      if (this.y<((40*areas[area].collision.length)-40)&&areas[area].collision[floor((this.y+20)/40)][floor(this.x/40)] > 0&&this.v.y>=0) {
+        if (areas[area].collision[floor((this.y+20)/40)][floor(this.x/40)] < 3) {
           this.v.y = 0;
-          this.inAir = false;
+          this.v.x = 0;
+          this.onGround = true;
           this.y = floor((this.y)/40)*40+20;
-          if (keys[this.i.up] === true) {
-            this.v.y = this.stats.jump;
-          }
-        } else if (areas[area][floor((this.y+20)/40)][floor(this.x/40)] === 3) {
-          if (this.v.y>0) {
-            this.stats.health-=5;
-          }
         }
       }
-      if (this.y>40&&areas[area][floor((this.y-20)/40)][floor(this.x/40)] === 1) {
+      if (this.y>40&&areas[area].collision[floor((this.y-20)/40)][floor(this.x/40)] === 1) {
         this.v.y = 0;
+        this.onGround = true;
         this.y = floor((this.y)/40)*40+20;
       }
     }
     // apply gravity
     this.y+=this.v.y;
         
-    if (this.y<40*areas[area].length&&this.y>0&&this.x<40*areas[area][0].length&&this.x>0) {
-      if (this.x-this.stats.speed>40&&areas[area][floor(this.y/40)][floor((this.x-11)/40)] === 1) {
-        this.allowMove[0] = false; // don't let them move left if a block is to the left
+    if (this.y<40*areas[area].collision.length&&this.y>0&&this.x<40*areas[area].collision[0].length&&this.x>0) {
+      if (this.x-(this.v.x)>40&&areas[area].collision[floor(this.y/40)][floor((this.x-11-(this.v.x))/40)] === 1) {
         this.x = floor((this.x)/40)*40+10; // set x-pos to 10 from block to the left
-        if (this.animState!=='sprintItem') this.animState = 'idle'; // stop walking
-        
-      }
-      if (this.x+this.stats.speed<40*areas[area][0].length-40&&areas[area][floor(this.y/40)][floor((this.x+10)/40)] === 1) {
-        this.allowMove[1] = false; // don't let them move right if a block is to the right
-        this.x = floor((this.x)/40)*40+30; // set x-pos to 10 from block to the right
-        if (this.animState!=='sprintItem') this.animState = 'idle'; // stop walking
-      }
-    }
-    
-  };
-  this.do = function() {
-    if (this.stats.stam<=5) {
-      this.recovery = true;
-    }
-    if (this.stats.stam>50) {
-      this.recovery = false;
-    }
-    if (this.stats.stam<this.stats.stamMax&&frameCount%5 == 0) {
-      
-      this.stats.stam+=2;
-      if (this.recovery === true) this.stats.stam--;
-      if (this.stats.stam>this.stats.stamMax) this.stats.stam = this.stats.stamMax;
-    }
-    
-    // item in a-slot
-    if (this.items.a!=='empty') {
-      if (pkey[this.i.a] === true) {
-        this.items.atime = 0;
-      }
-      if (rkey[this.i.a] === true) {
-        this.items.atimer = -1;
-      }
-      
-      if (keys[this.i.a] === true) {
-        for (var i = 0; i < this.items.a.pboxes.length; i ++) {
-          if (this.items.atime === this.items.a.pboxes[i][2]&&this.items.atimer>=this.items.a.pboxes[i][2]) {
-            var ito = this.items.a;
-            var alter = 0;
-            if (this.items.a.pboxes[i][8] === true) alter = this.v.y;
-            hitboxes[hitboxes.length] = [
-              0,
-              ito.pboxes[i][3],
-              ito.pboxes[i][4]*this.dir+this.x,
-              ito.pboxes[i][5]+this.y,
-              ito.pboxes[i][6]*this.dir,
-              ito.pboxes[i][7]+alter*2,
-              this.dir,
-              this,
-              ito.pboxes[i][8],
-              spriteToImage(ito.sprites[ito.pboxes[i][0]],ito.palettes[ito.pboxes[i][1]])
-            ];
-          }
-        }
-        for (var i = 0; i < this.items.a.cboxes.length; i ++) {
-          if ((this.items.atime+this.items.a.cboxes[i][9]) % this.items.a.cboxes[i][2] === 0) {
-            var ito = this.items.a;
-            var alter = 0;
-            if (this.items.a.cboxes[i][8] === true) alter = this.v.y;
-            hitboxes[hitboxes.length] = [
-              0,
-              ito.cboxes[i][3],
-              ito.cboxes[i][4]*this.dir+this.x,
-              ito.cboxes[i][5]+this.y,
-              ito.cboxes[i][6]*this.dir,
-              ito.cboxes[i][7]+alter*2,
-              this.dir,
-              this,
-              ito.cboxes[i][8],
-              spriteToImage(ito.sprites[ito.cboxes[i][0]],ito.palettes[ito.cboxes[i][1]])
-            ];
-          }
-        }
-        
-        this.items.atime++;
-        
-      } else {
-        this.items.atimer++;
-      }
-      for (var i = 0; i < this.items.a.rboxes.length; i ++) {
-          if (this.items.atimer === this.items.a.rboxes[i][2]) {
-            var ito = this.items.a;
-            var alter = 0;
-            if (this.items.a.rboxes[i][8] === true) alter = this.v.y;
-            hitboxes[hitboxes.length] = [
-              0,
-              ito.rboxes[i][3],
-              ito.rboxes[i][4]*this.dir+this.x,
-              ito.rboxes[i][5]+this.y,
-              ito.rboxes[i][6]*this.dir,
-              ito.rboxes[i][7]+alter*2,
-              this.dir,
-              this,
-              ito.rboxes[i][8],
-              spriteToImage(ito.sprites[ito.rboxes[i][0]],ito.palettes[ito.rboxes[i][1]])
-            ];
-            
-          }
-      }
-    }
-    
-    // item in b-slot
-    if (this.items.b!=='empty') {
-      if (pkey[this.i.b] === true) {
-        this.items.btime = 0;
-      }
-      if (rkey[this.i.b] === true) {
-        this.items.btimer = -1;
-      }
-      
-      if (keys[this.i.b] === true) {
-        for (var i = 0; i < this.items.b.pboxes.length; i ++) {
-          if (this.items.btime === this.items.b.pboxes[i][2]) {
-            var ito = this.items.b;
-            var alter = 0;
-            if (this.items.b.pboxes[i][8] === true) alter = this.v.y;
-            hitboxes[hitboxes.length] = [
-              0,
-              ito.pboxes[i][3],
-              ito.pboxes[i][4]*this.dir+this.x,
-              ito.pboxes[i][5]+this.y,
-              ito.pboxes[i][6]*this.dir,
-              ito.pboxes[i][7]+alter*2,
-              this.dir,
-              this,
-              ito.pboxes[i][8],
-              spriteToImage(ito.sprites[ito.pboxes[i][0]],ito.palettes[ito.pboxes[i][1]])
-            ];
-          }
-        }
-        for (var i = 0; i < this.items.b.cboxes.length; i ++) {
-          if (this.items.btime % this.items.b.cboxes[i][2] === 0) {
-            var ito = this.items.b;
-            var alter = 0;
-            if (this.items.b.cboxes[i][8] === true) alter = this.v.y;
-            hitboxes[hitboxes.length] = [
-              0,
-              ito.cboxes[i][3],
-              ito.cboxes[i][4]*this.dir+this.x,
-              ito.cboxes[i][5]+this.y,
-              ito.cboxes[i][6]*this.dir,
-              ito.cboxes[i][7]+alter*2,
-              this.dir,
-              this,
-              ito.cboxes[i][8],
-              spriteToImage(ito.sprites[ito.cboxes[i][0]],ito.palettes[ito.cboxes[i][1]])
-            ];
-          }
-        }
-        this.items.btime++;
-        
-      } else {
-        this.items.btimer++;
-      }
-      for (var i = 0; i < this.items.b.rboxes.length; i ++) {
-          if (this.items.btimer === this.items.b.rboxes[i][2]) {
-            var ito = this.items.b;
-            var alter = 0;
-            if (this.items.b.rboxes[i][8] === true) alter = this.v.y;
-            hitboxes[hitboxes.length] = [
-              0,
-              ito.rboxes[i][3],
-              ito.rboxes[i][4]*this.dir+this.x,
-              ito.rboxes[i][5]+this.y,
-              ito.rboxes[i][6]*this.dir,
-              ito.rboxes[i][7]+alter*2,
-              this.dir,
-              this,
-              ito.rboxes[i][8],
-              spriteToImage(ito.sprites[ito.rboxes[i][0]],ito.palettes[ito.rboxes[i][1]])
-            ];
-            
-          }
-      }
-    }
-    
-  };
-  this.ui = function() {
-    noStroke();
-    fill(0);
-    rect(20,20,2*this.stats.healthMax,20);
-    fill(255,0,0);
-    for (var i = 0; i < this.stats.health; i +=10) {
-      rect(25+i*2,25,10,10);
-    }
-    fill(0);
-    rect(20,60,2*this.stats.stamMax,20);
-    fill(255);
-    if (this.recovery === true) {
-      fill(sin(frameCount/10)*255);
-    }
-    for (var i = 0; i < this.stats.stam; i +=10) {
-      rect(25+i*2,65,10,10);
-    }
-    ntext(this.name,50,50,2);
-    push();
-    strokeWeight(5);
-    stroke(255);
-    noFill();
-    rect(255,10,50,50);
-    rect(335,10,50,50);
-    pop();
-    ntext("B A",280,80,5);
-    if (this.items.b!=='empty') {
-    displaySprite(this.items.b.icon,this.items.b.iconPalette,[5,5],280,35);
-    }
-    if (this.items.a!=='empty') {
-    displaySprite(this.items.a.icon,this.items.a.iconPalette,[5,5],360,35);
-    }
-    
-    if (pkey[this.i.start] === true) {
-      playScreen = 'forge';
-    }
-  };
-  this.forge = function() {
-    if (pkey[this.i.select] === true) {
-      playScreen = 'play';
-    }
-    if (keys[this.i.b] === true) {
-      var channel = 1;
-      if (keys[this.i.left] === true) channel = 0;
-      if (keys[this.i.right] === true) channel = 2;
-      
-        if (paletteInEdit[state].length === 1) paletteInEdit[state] = [paletteInEdit[state][0],paletteInEdit[state][0],paletteInEdit[state][0],255];
-        if (paletteInEdit[state].length === 3) paletteInEdit[state] = [paletteInEdit[state][0],paletteInEdit[state][1],paletteInEdit[state][2],255];
-        if (paletteInEdit[state].length === 4) paletteInEdit[state] = [paletteInEdit[state][0],paletteInEdit[state][1],paletteInEdit[state][2],paletteInEdit[state][3]];
-      
-      if (keys[this.i.up] === true) {
-        if (channel === 0) paletteInEdit[state][0]++;
-        if (channel === 1) paletteInEdit[state][1]++;
-        if (channel === 2) paletteInEdit[state][2]++;
-      }
-      if (keys[this.i.down] === true) {
-        if (channel === 0) paletteInEdit[state][0]--;
-        if (channel === 1) paletteInEdit[state][1]--;
-        if (channel === 2) paletteInEdit[state][2]--;
-      }
-    }
+        this.v.x = 0;
+        this.tryJump = true;
 
+      }
+      if (this.x+(this.v.x)<40*areas[area].collision[0].length-40&&areas[area].collision[floor(this.y/40)][floor((this.x+10+(this.v.x))/40)] === 1) {
+        this.x = floor((this.x)/40)*40+30; // set x-pos to 10 from block to the right
+        this.v.x = 0;
+        this.tryJump = true;
+      }
+      if (areas[area].collision[floor(this.y/40)][floor((this.x)/40)] === 1) {
+        this.y-=40;
+      }
+    }
+    this.x+=this.v.x;
+    this.v.x*=.97;
   };
+  
+  this.move = function() {
+    this.x+=this.dir*2;
+    this.animState = 'walk';
+    if (dist(this.x,this.y,this.tar.x,this.tar.y)>200&&this.x!==this.tar.x) {
+      this.x+=abs(-this.x + this.tar.x)/(-this.x + this.tar.x)*4;
+      this.animState = 'sprint';
+    }
+    if (random(100)<3){
+      this.dir = -this.dir;
+    }
+    if ((random(100)<1||this.tryJump)&&this.onGround) {
+      this.v.y = -random(23);
+      if (this.x!==this.tar.x) this.v.x += dist(this.x,this.y,this.tar.x,this.tar.y)/(50*abs(-this.x + this.tar.x)/(-this.x + this.tar.x));
+    }
+    
+    if (random(100)<3&&this.x!==this.tar.x) this.dir = abs(-this.x + this.tar.x)/(-this.x + this.tar.x);
+  };
+  
+  this.interact = function() {
+    var data = isHit(this.x,this.y);
+    if (data.hit) {
+      this.v.x+=data.v.x*data.knockback/5;
+      this.v.y+=data.v.y*data.knockback/5;
+    }
+    
+    if (dist(this.x,this.y,p1.x,p1.y)<35) {
+      p1.getHit(10,{'x': 0,'y' : 0},0);
+    }
+  };
+
+  this.target = function(point) {
+    this.tar.x = point.x;
+    this.tar.y = point.y;
+  };
+}
+
+function clone(variable) {
+  return JSON.parse(JSON.stringify(variable));
 }
 
 function areaDis(a) {
   noStroke();
-  for (var j = 0; j < a.length; j ++) {
-    for (var i = 0; i < a[0].length; i ++) {
-      if (a[j][i]>0) {
+  for (var j = 0; j < a.graphics.length; j ++) {
+    for (var i = 0; i < a.graphics[0].length; i ++) {
+      if (a.graphics[j][i]>0) {
         //fill(50,255,50);
         //rect(i*40,j*40,40,40);
         
-        displayTile(tiles[area][a[j][i]],[[50, 25, 1],[122, 52, 2],[255,100,4],[0,255,0],[0,0,0,0]],[5,5],i*40+20,j*40+20);
+        displayTile(a.sprites[a.graphics[j][i]],a.palettes[a.graphics[j][i]],[5,5],i*40+20,j*40+20);
         
       }
     }
-  }
-}
-
-function cloneNumArray(da) {
-  var ar = [];
-  for (var i = 0; i < da.length; i ++) {
-    ar[i] = da[i]+0;
   }
 }
 
@@ -846,7 +740,8 @@ function Save() {
   var sda = {
     'name' : p1.name,
     'itemA': p1.items.a,
-    'itemB': p1.items.b
+    'itemB': p1.items.b,
+    'controller' : p1.i
   };
   localStorage.setItem("savedata",JSON.stringify(sda));
 }
@@ -860,457 +755,638 @@ function Load() {
 }
 
 
-function scrollTranslation(listPoint,scroll,listLength,disLength) {
-  listLength-=disLength;
-  var scrollPercent = -scroll/disLength;
-  var translation = scrollPercent*listLength;
-  return floor(translation+listPoint);
-}
 
-function editData(s) {
-  var ar = [48,49,50,51];
-  for (var i = 0; i < 4; i ++) {
-    if (keys[ar[i]] === true) {
-      state = i;
-    }
+var canDoVelocity = {
+  'never' : function(age,vclock,life) {
+    return false;
+  },
+  'onSpawn' : function(age,vclock,life) {
+    return (age===0);
+  },
+  'continuously' : function(age,vclock,life) {
+    return ((age+1)%vclock===0);
+  },
+  'onDeath' : function(age,vclock,life) {
+    return (age===life);
   }
-  if (mouseY<400&&mouseY>0&&mouseX>0&&mouseX<400&&mouseIsPressed) {
-    s[floor(mouseY/50)][floor(mouseX/50)] = state;
-  }
-  
-}
-
-function handleboxes() {
-    
-    for (var i = 0; i < hitboxes.length; i ++) {
-      
-      push();
-        translate(floor(hitboxes[i][2]/5)*5,floor(hitboxes[i][3]/5)*5);
-        scale(hitboxes[i][6],1);
-        image(hitboxes[i][9],-20,-20);
-      pop();
-      
-      
-      if (hitboxes[i][0]<5) hitboxes[i][7].animState = 'sprintItem';
-      
-      hitboxes[i][2]+=hitboxes[i][4];
-      hitboxes[i][3]+=hitboxes[i][5];
-      if (hitboxes[i][8] === true&&alt === true) hitboxes[i][5] ++;
-      hitboxes[i][0]++;
-    }
-    for (var i = 0; i < hitboxes.length; i ++) {
-      if (
-      hitboxes[i][0]>=hitboxes[i][1]||
-      (hitboxes[i][2]<0||hitboxes[i][3]<0||hitboxes[i][3]>areas[area].length*40||hitboxes[i][2]>areas[area][0].length*40)||
-      (hitboxes[i][8] === true&&hitboxes[i][2]>0&&hitboxes[i][3]>0&&hitboxes[i][2]<areas[area][0].length*40&&hitboxes[i][3]<areas[area].length*40&&areas[area][floor(hitboxes[i][3]/40)][floor(hitboxes[i][2]/40)] === 1)
-      ) {
-        hitboxes.splice(i,1);
-      }
-    }
 };
 
-function enterNum(num) {
-  var pkeys = [48,49,50,51,52,53,54,55,56,57];
-  var sign = 1;
-  if (num!==0) {
-    sign = (num/abs(num));
-  }
-  
-  for (var i = 0; i < pkeys.length; i ++) {
-    if (pkey[pkeys[i]] === true) {
-      return ((abs(num)*10)+i)*sign;
+function handleboxes() {
+  for (var i = 0; i < hitboxes.length; i ++) {
+    var box = hitboxes[i];
+    if (box.moveSelf.doGravity) box.moveSelf.v.y++;
+
+    if (box.moveSelf.isSticky) {
+      box.moveSelf.s = {
+        'x' : box.blueprint.moveSelf.x*box.dir + box.owner.x,
+        'y' : box.blueprint.moveSelf.y + box.owner.y
+      };
+    }
+    if (box.movePlayer.freezePlayer) box.owner.noMove = true;
+    if (box.movePlayer.preventOtherItems) box.owner.inhibitingItem[box.button] = true;
+    push();
+    translate(box.moveSelf.x,box.moveSelf.y);
+    scale(box.dir,1);
+    image(box.display,-20,-20,40,40);
+    pop();
+    ///ellipse(box.moveSelf.x,box.moveSelf.y,10,10);
+    /* // center of box
+    push();
+    fill(255);
+    stroke(0);
+    ellipse(box.moveSelf.x,box.moveSelf.y,5,5);
+    pop();
+    */
+    if (canDoVelocity[box.movePlayer.addVelocityWhen](box.death.timeAlive,box.movePlayer.addVClock+1,box.death.timeToLive)) {
+      box.owner.v.x +=box.movePlayer.addV.x*box.dir;
+      box.owner.v.y +=box.movePlayer.addV.y;
+    }
+    if (canDoVelocity[box.movePlayer.setVelocityWhen](box.death.timeAlive,box.movePlayer.setVClock+1,box.death.timeToLive)) {
+      box.owner.v.x =box.movePlayer.setV.x*box.dir;
+      box.owner.v.y =box.movePlayer.setV.y;
+    }
+    
+    if (!box.moveSelf.isSticky) {
+      box.moveSelf.x += box.moveSelf.v.x;//*box.dir;
+      box.moveSelf.y += box.moveSelf.v.y;
+    } else if (box.moveSelf.isSticky) {
+      box.moveSelf.x = box.moveSelf.s.x;
+      box.moveSelf.y = box.moveSelf.s.y;
+    }
+    
+    box.death.timeAlive++;
+    
+    if (dist(box.moveSelf.x,box.moveSelf.y,box.owner.x,box.owner.y)<70) box.owner.animState = 'sprintItem';
+    if (box.death.timeAlive > box.death.timeToLive) {
+      hitboxes.splice(i,1);
     }
   }
-  if (pkey[8] === true) {
-    return floor(abs(num)/10)*sign;
-  }
-  if (pkey[189] === true) {
-    num = -num;
-  }
-  return num;
-}
+};
 
-function editBoxWindow(x,y,data) {
+var pauseNum = 0;
+var pauseFunctions = [
+  function() {
+    playScreen = 'play';
+  },
+  function() {
+    playScreen = 'forge';
+  },
+  function() {
+    playScreen = 'map-controls';
+    doesnum = 0;
+  },
+  function() {
+    playScreen = 'pause-save-management';
+    pauseNum = 0;
+  }
+];
+var pauseFunctionsSaves = [
+  function() {
+    playScreen = 'pause';
+  },
+  function() {
+    if (pkey[27] === true) Save();
+    ntext('save data updated',25,575,5);
+  },
+  function() {
+    localStorage.removeItem("savedata");
+    ntext('save data cleared',25,575,5);
+  }
+];
+
+function highlighted(x,y,w,h) {
+  return (mouseX>x&&mouseY>y&&mouseX<x+w&&mouseY<y+h);
+};
+
+function PauseMenu() {
   push();
-  translate(x,y);
-  fill(0,0,0);
-  stroke(200,200,100);
-  rect(0,0,300,150);
-  fill(255);
-  stroke(255);
-  translate(0,15);
-  y+=15;
-  
-  if (mouseX-x>0&&mouseY-y>0&&mouseY-y<10&&mouseX-x<300) {
-    if (enterNum(data[0])<itemInEdit.sprites.length&&enterNum(data[0])>=0) data[0] = enterNum(data[0])+0;
-    fill(255,255,0);
-  }
-  text('sprite ID: '+data[0],10,10);
-  fill(255);
-  
-  if (mouseX-x>0&&mouseY-y>12&&mouseY-y<22&&mouseX-x<300) {
-    if (enterNum(data[1])<itemInEdit.palettes.length&&enterNum(data[0])>=0) data[1] = enterNum(data[1])+0;
-    fill(255,255,0);
-  }
-  text('palette ID: '+data[1],10,22);
-  fill(255);
-  
-  if (mouseX-x>0&&mouseY-y>24&&mouseY-y<34&&mouseX-x<300) {
-    if (enterNum(data[2])>=0) data[2] = enterNum(data[2])+0;
-    fill(255,255,0);
-  }
-  text('when to spawn: '+data[2],10,34);
-  fill(255);
-  
-  if (mouseX-x>0&&mouseY-y>36&&mouseY-y<46&&mouseX-x<300) {
-    data[4] = enterNum(data[4])+0;
-    fill(255,255,0);
-  }
-  text('x-start: '+data[4],10,46);
-  fill(255);
-  
-  if (mouseX-x>0&&mouseY-y>48&&mouseY-y<58&&mouseX-x<300) {
-    data[5] = enterNum(data[5])+0;
-    fill(255,255,0);
-  }
-  text('y-start: '+data[5],10,58);
-  fill(255);
-  
-  if (mouseX-x>0&&mouseY-y>60&&mouseY-y<70&&mouseX-x<300) {
-    data[6] = enterNum(data[6])+0;
-    fill(255,255,0);
-  }
-  text('x-velocity: '+data[6],10,70);
-  fill(255);
-  
-  if (mouseX-x>0&&mouseY-y>72&&mouseY-y<82&&mouseX-x<300) {
-    data[7] = enterNum(data[7]+0);
-    fill(255,255,0);
-  }
-  text('y-velocity: '+data[7],10,82);
-  
-  fill(255);
-  text('affected by physics: ',10,94);
-  if (data[8] === false) fill(0,0,0);
-  else fill (255);
-  rect(textWidth('affected by physics: ')+8,84,10,10);
-  if (mouseFrame === true && mouseX-x>0&&mouseX-x<textWidth('affected by physics: ')+18&&mouseY-y>84&&mouseY-y<94) data[8] = !data[8];
-  fill(255);
-  if (mouseX-x>0&&mouseY-y>96&&mouseY-y<106&&mouseX-x<300) {
-    data[9] = enterNum(data[9])+0;
-    fill(255,255,0);
-  }
-  text('spawn clock offset: '+data[9],10,106);
-  fill(255);
-  if (mouseX-x>0&&mouseY-y>108&&mouseY-y<118&&mouseX-x<300) {
-    data[3] = enterNum(data[3])+0;
-    fill(255,255,0);
-  }
-  text('amount of time existing: '+data[3],10,118);
-  
   noStroke();
+  fill(0,0,0,100);
+  rect(-10,-10,width+10,height+10);
+  rect(width/2-70,height/2-20,350,200);
+  ntext('paused',width/4-96,height/2,4);
+  ntext('resume',width/2,height/2,3);
+  ntext('forge',width/2,height/2+50,3);
+  ntext('map controls',width/2,height/2+100,3);
+  ntext('save data',width/2,height/2+150,3);
+  
+  if (pauseNum<0) pauseNum = 3;
+  if (pauseNum>3) pauseNum = 0;
+  fill(255,255,0);
+  rect(width/2-50,height/2+50*pauseNum,15,15);
   pop();
-  return data;
+};
+function PauseMenuSaves() {
+  noStroke();
+  push();
+  fill(0,0,0,100);
+  rect(-10,-10,width+10,height+10);
+  rect(width/2-70,height/2-20,350,200);
+  ntext('save data',width/4-146,height/2,4);
+  ntext('return',width/2,height/2,3);
+  ntext('save game',width/2,height/2+50,3);
+  ntext('clear data',width/2,height/2+100,3);
+  
+  if (pauseNum<0) pauseNum = 2;
+  if (pauseNum>2) pauseNum = 0;
+  fill(255,255,0);
+  rect(width/2-50,height/2+50*pauseNum,15,15);
+  pop();
+};
+
+function button(t,x,y,w,h,f) {
+  fill(100);
+  if (highlighted(x,y,w,h)) {
+    fill(255,255,0);
+    if (mouseFrame===true) f();
+  }
+  stroke(75);
+  rect(x,y,w,h);
+  fill(255);
+  textSize(16);
+  textAlign(CENTER,CENTER);
+  ntext(t,floor(x+w/2)-t.length*8+8,floor(y+h/2),2);
+};
+function slider(v,x,y,w,h,r) {
+  fill(100);
+  rect(x,y,w,h);
+  if (highlighted(x,y,w,h)) {
+    if (mouseIsPressed===true) {
+      v = map(mouseY,y,y+h,0,r,true);
+    }
+  }
+  fill(150);
+  rect(x-5,map(v,0,r,y,y+h,true)-5,w+10,10);
+  
+  return v;
+  
+}
+function slider2(v,x,y,w,h,r) {
+  fill(100);
+  rect(x,y,w,h);
+  if (highlighted(x,y,w,h)) {
+    if (mouseIsPressed===true) {
+      v = map(mouseX,x,x+w,0,r,true);
+    }
+  }
+  fill(150);
+  rect(map(v,0,r,x,x+w,true)-5,y-5,10,h+10);
+  
+  return v;
+  
 }
 
-var alt = true;
-function forge() {
-  // background stuff {
-    background(255,255,255);
-    fill(
-      (sin((frameCount+0)/35)*(255/10))+(255/2),
-      (sin((frameCount+200)/35)*(255/10))+(255/2),
-      (sin((frameCount+1500)/35)*(255/10))+(255/2)
-    );
-    rect(0,0,400,400);
-    
-    
-    //} edit Sprite & display
-    displaySprite(spriteInEdit,paletteInEdit,[50,50],200,200);
-    editData(spriteInEdit);
-    
-    
-    //sprite selector bar {
-    rect(40,450,420,50);
-    var spx = 55+scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400);
-    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
-        push();
-        noFill();
-        rect(spx-20,455,40,40);
-        pop();
-        
-        if (mouseIsPressed === true) {
-          spriteInEdit = itemInEdit.icon;
+var itemInEdit;
+var inEditRefr;
+var spriteInEdit = {
+  'data': [],
+  'ID' : 0
+};
+var paletteInEdit = {
+  'data':[],
+  'ID':0
+};
+var hitboxInEdit = {
+  'data' : {},
+  'ID' : 0
+};
+
+
+var forgeScreen = 'select';
+var forgeFunc = {
+  'select' : function() {
+    background(150);
+    button('BACK',width-100,0,100,25,function() {playScreen = 'pause';});
+    var y = 0;
+    for (var i in closet) {
+      button(
+        i,
+        15,15+y,
+        200,25,
+        function() {
+          forgeScreen = 'edit-item';
+          itemInEdit = JSON.parse(JSON.stringify(closet[i]));
+          inEditRefr = i;
         }
-      }
-    displaySprite(itemInEdit.icon,[[0,0,0,0],[0],[255],[255,0,0]],[5,5],56+floor(scrollTranslation(25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
+      );
+      fill((sin(frameCount*(PI/180))+1)/2*255,(cos(frameCount*(PI/180))+1)/2*255,(sin(frameCount*(PI/180))+1)/2*255);
+      rect(15,15+y,24,24);
+      displaySprite(closet[i].sprites[closet[i].icon],closet[i].palettes[closet[i].iconPalette],[3,3],27,27+y);
+      y+=30;
+    }
+  },
+  'edit-item' : function() {
+    background(150);
+    ntext('edit item - '+itemInEdit.name,15,15,3);
+    button('OK',width-100,0,100,25,function() {
+      forgeScreen = 'select';
+      closet[inEditRefr] = JSON.parse(JSON.stringify(itemInEdit));
+    });
+    button('CANCEL',width-100,25,100,25,function() {
+      forgeScreen = 'select';
+    });
+    ntext('sprites',25,65,1);
+    var pos = {'x':0,'y':0};
     for (var i = 0; i < itemInEdit.sprites.length; i ++) {
-      displaySprite(itemInEdit.sprites[i],[[0,0,0,0],[0],[255],[255,0,0]],[5,5],55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400)),475);
-      var spx = 55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.sprites.length+2),400));
-      if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
-        push();
-        noFill();
-        rect(spx-20,455,40,40);
-        pop();
-        if (pkey[8] === true&&i>0) {
-          itemInEdit.sprites.splice(i,1);
-        }
-        if (mouseIsPressed === true) {
-          spriteInEdit = itemInEdit.sprites[i];
-        }
+      // button under preview
+      
+      if (pos.y>=11) {
+        pos.x+=45;
+        pos.y = 0;
       }
+      button('',25+pos.x,75+pos.y*45,40,40,function() {
+        forgeScreen = 'edit-sprite';
+        spriteInEdit.data = JSON.parse(JSON.stringify(itemInEdit.sprites[i]));
+        spriteInEdit.ID = i;
+      });
+      pos.y++;
+      // preview the sprite
+      displaySprite(itemInEdit.sprites[i],[[0,0,0,0],[255,255,255,255],[255,0,0,255],[0,0,0,255]],[5,5],45,95+i*45);
     }
-    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400),475);
-    var spx = 55+scrollTranslation(50*(itemInEdit.sprites.length+2)-25,mouseX-50,50*(itemInEdit.sprites.length+2),400);
-    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>450&&mouseY<500) {
-        push();
-        noFill();
-        rect(spx-20,455,40,40);
-        pop();
-        if (mouseFrame === true) {
-          itemInEdit.sprites[itemInEdit.sprites.length] = emptySprite();
-          for (var j = 0; j < itemInEdit.sprites[itemInEdit.sprites.length-1].length; j++) {
-            for (var i = 0; i < itemInEdit.sprites[itemInEdit.sprites.length-1][j].length; i++) {
-              itemInEdit.sprites[itemInEdit.sprites.length-1][j][i] = spriteInEdit[j][i]+0;
-            }
-          }
-        }
-      }
-      
-    //} palette selector {
-     rect(40,525,420,50);
-    var spx = 55+scrollTranslation(25,mouseX-50,50*(itemInEdit.palettes.length+2),400);
-    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
-        push();
-        noFill();
-        rect(spx-20,530,40,40);
-        pop();
-        if (mouseIsPressed === true) {
-          paletteInEdit = itemInEdit.iconPalette;
-        }
-      }
-      push();
-      translate(spx-20,525);
-      fill(newcolor(itemInEdit.iconPalette[1]));
-      rect(0,5,15,15);
-      fill(newcolor(itemInEdit.iconPalette[2]));
-      rect(13,18,15,15);
-      fill(newcolor(itemInEdit.iconPalette[3]));
-      rect(25,30,15,15);
-      
-      pop();
+    button('+',25+pos.x,75+pos.y*45,40,40,function() {
+      itemInEdit.sprites[itemInEdit.sprites.length] = emptySprite();
+    });
+    pos.y = 0;
+    pos.x+=45;
+    ntext('palettes',75+pos.x,65,1);
+
     for (var i = 0; i < itemInEdit.palettes.length; i ++) {
-      var spx = 55+floor(scrollTranslation(50*(i+1)+25,mouseX-50,50*(itemInEdit.palettes.length+2),400));
-      push();
-      translate(spx-20,525);
-      fill(itemInEdit.palettes[i][1]);
-      rect(0,5,15,15);
-      fill(itemInEdit.palettes[i][2]);
-      rect(13,18,15,15);
-      fill(itemInEdit.palettes[i][3]);
-      rect(25,30,15,15);
-      
-      pop();
-      if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
-        push();
-        noFill();
-        rect(spx-20,530,40,40);
-        pop();
-        if (pkey[8] === true&&i>0) {
-          itemInEdit.palettes.splice(i,1);
-        }
-        if (mouseIsPressed === true) {
-          paletteInEdit = itemInEdit.palettes[i];
-        }
+      // button under preview
+      if (pos.y>=11) {
+        pos.x+=45;
+        pos.y = 0;
       }
+      button('',75+pos.x,75+pos.y*45,40,40,function() {
+        forgeScreen = 'edit-palette';
+        paletteInEdit.data = JSON.parse(JSON.stringify(itemInEdit.palettes[i]));
+        paletteInEdit.ID = i;
+      });
+      //preview the palette
+      fill(itemInEdit.palettes[i][1][0],itemInEdit.palettes[i][1][1],itemInEdit.palettes[i][1][2]);
+      rect(80+pos.x,80+pos.y*45,15,15);
+      fill(itemInEdit.palettes[i][2][0],itemInEdit.palettes[i][2][1],itemInEdit.palettes[i][2][2]);
+      rect(88+pos.x,88+pos.y*45,15,15);
+      fill(itemInEdit.palettes[i][3][0],itemInEdit.palettes[i][3][1],itemInEdit.palettes[i][3][2]);
+      rect(96+pos.x,96+pos.y*45,15,15);
+      pos.y++;
     }
-    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400),550);
-    var spx = 55+scrollTranslation(50*(itemInEdit.palettes.length+2)-25,mouseX-50,50*(itemInEdit.palettes.length+2),400);
-    if (mouseX<spx+20&&mouseX>spx-20&&mouseY>525&&mouseY<575) {
-        push();
-        noFill();
-        rect(spx-20,530,40,40);
-        pop();
-        if (mouseFrame === true) {
-          itemInEdit.palettes[itemInEdit.palettes.length] = [[0,0,0,0],[0],[255],[255,0,0]];
-          
-        }
-      }
-      
-      //} hitbox selectors {
-      fill(
-      (sin((frameCount+0)/35)*(255/10))+(255/2),
-      (sin((frameCount+200)/35)*(255/10))+(255/2),
-      (sin((frameCount+1500)/35)*(255/10))+(255/2)
-    );
-      stroke(255);
-      rect(450,50,50,300);
-      rect(550,50,50,300);
-      rect(650,50,50,300);
-    for (var i = 0; i < itemInEdit.pboxes.length; i ++) {
-      var py = 75+scrollTranslation(i*50,mouseY-75,50*(itemInEdit.pboxes.length+1),300);
-      displaySprite(itemInEdit.sprites[itemInEdit.pboxes[i][0]],itemInEdit.palettes[itemInEdit.pboxes[i][1]],[5,5],475,py);
-      var spx = py;
-       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>450&&mouseX<500) {
-        push();
-        noFill();
-        stroke(255);
-        rect(455,spx-20,40,40);
-        pop();
-        if (pkey[8] === true) {
-          itemInEdit.pboxes.splice(i,1);
-        }
-        if (mouseFrame === true) {
-          boxInEdit = itemInEdit.pboxes[i];
-        }
-      }
-    }
-    for (var i = 0; i < itemInEdit.cboxes.length; i ++) {
-      var py = 75+scrollTranslation(i*50,mouseY-75,50*(itemInEdit.cboxes.length+1),300);
-      displaySprite(itemInEdit.sprites[itemInEdit.cboxes[i][0]],itemInEdit.palettes[itemInEdit.cboxes[i][1]],[5,5],575,py);
-      var spx = py;
-       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>550&&mouseX<600) {
-        push();
-        noFill();
-        stroke(255);
-        rect(555,spx-20,40,40);
-        pop();
-        if (pkey[8] === true) {
-          itemInEdit.cboxes.splice(i,1);
-        }
-        if (mouseFrame === true) {
-          boxInEdit = itemInEdit.cboxes[i];
-        }
-      }
-    }
-    for (var i = 0; i < itemInEdit.rboxes.length; i ++) {
-      var py = 75+scrollTranslation(i*50,mouseY-75,50*(itemInEdit.rboxes.length+1),300);
-      displaySprite(itemInEdit.sprites[itemInEdit.rboxes[i][0]],itemInEdit.palettes[itemInEdit.rboxes[i][1]],[5,5],675,py);
-      var spx = py;
-       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>650&&mouseX<700) {
-        push();
-        noFill();
-        stroke(255);
-        rect(655,spx-20,40,40);
-        pop();
-        if (pkey[8] === true) {
-          itemInEdit.rboxes.splice(i,1);
-        }
-        if (mouseFrame === true) {
-          boxInEdit = itemInEdit.rboxes[i];
-        }
-      }
-    }
-    var py = 75+scrollTranslation(itemInEdit.pboxes.length*50,mouseY-75,50*(itemInEdit.pboxes.length+1),300);
-    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],475,py);
-    var spx = py;
-       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>450&&mouseX<500) {
-        push();
-        noFill();
-        stroke(255);
-        rect(455,spx-20,40,40);
-        pop();
-        if (mouseFrame === true) {
-          itemInEdit.pboxes[itemInEdit.pboxes.length] = [0,0,1,1,35,0,0,0,false,0];
-          boxInEdit = itemInEdit.pboxes[itemInEdit.pboxes.length-1];
-        }
-      }
+    button('+',75+pos.x,75+pos.y*45,40,40,function() {
+      itemInEdit.palettes[itemInEdit.palettes.length] = [[0,0,0,0],[255,255,255,255],[255,0,0,255],[0,0,0,255]];
+    });
     
-     py = 75+scrollTranslation(itemInEdit.cboxes.length*50,mouseY-75,50*(itemInEdit.cboxes.length+1),300);
-    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],575,py);
-    var spx = py;
-       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>550&&mouseX<600) {
-        push();
-        noFill();
-        stroke(255);
-        rect(555,spx-20,40,40);
-        pop();
-        if (mouseFrame === true) {
-          itemInEdit.cboxes[itemInEdit.cboxes.length] = [0,0,1,1,35,0,0,0,false,0];
-          boxInEdit = itemInEdit.cboxes[itemInEdit.cboxes.length-1];
-        }
-      }
+    pos.y = 0;
+    pos.x+=45;
     
-     py = 75+scrollTranslation(itemInEdit.rboxes.length*50,mouseY-75,50*(itemInEdit.rboxes.length+1),300);
-    displaySprite(plus,[[0,0,0,0],[0],[255],[0,255,0]],[5,5],675,py);
-    var spx = py;
-       if (mouseY<spx+20&&mouseY>spx-20&&mouseX>650&&mouseX<700) {
-        push();
-        noFill();
-        stroke(255);
-        rect(655,spx-20,40,40);
-        pop();
-        if (mouseFrame === true) {
-          itemInEdit.rboxes[itemInEdit.rboxes.length] = [0,0,1,1,35,0,0,0,false,0];
-          boxInEdit = itemInEdit.rboxes[itemInEdit.rboxes.length-1];
-        }
+    ntext('hitboxes', 125+pos.x,65,1);
+    for (var i = 0; i < itemInEdit.boxes.length; i ++) {
+      if (pos.y>=11) {
+        pos.x+=45;
+        pos.y = 0;
       }
-      //}hitbox editing window
-      fill(255);
-      rect(445,350,300,300);
-      rect(400,0,500,50);
-      rect(0,400,50,500);
-      boxInEdit = editBoxWindow(475,425,boxInEdit);
-      
-    //equip to slot {
-    fill(
-      (sin((frameCount+0)/35)*(255/10))+(255/2),
-      (sin((frameCount+200)/35)*(255/10))+(255/2),
-      (sin((frameCount+1500)/35)*(255/10))+(255/2)
-    );
-    rect(750,50,50,100);
-    rect(750,250,50,100);
-    ntext('b',775,125,5);
-    ntext('a',775,325,5);
-    displaySprite(p1.items.b.icon,p1.items.b.iconPalette,[5,5],775,75);
-    displaySprite(p1.items.a.icon,p1.items.a.iconPalette,[5,5],775,275);
-    if (mouseFrame===true) {
-      if (mouseX>750) {
-        if (mouseY>50&&mouseY<150) {
-          p1.items.b = JSON.parse(JSON.stringify(itemInEdit));
-        }
-        if (mouseY>250&&mouseY<350) {
-          p1.items.a = JSON.parse(JSON.stringify(itemInEdit));
-        }
-      }
+      button('',125+pos.x,75+pos.y*45,40,40,function() {
+        forgeScreen = 'edit-hitbox';
+        hitboxInEdit.ID = i+0;
+        hitboxInEdit.data = JSON.parse(JSON.stringify(itemInEdit.boxes[i]));
+      });
+      fill((sin(frameCount*(PI/180))+1)/2*255,(cos(frameCount*(PI/180))+1)/2*255,(sin(frameCount*(PI/180))+1)/2*255);
+      rect(127+pos.x,77+pos.y*45,36,36);
+      if (itemInEdit.boxes[i].spriteID>=itemInEdit.sprites.length) itemInEdit.boxes[i].spriteID = itemInEdit.sprites.length-1;
+      if (itemInEdit.boxes[i].paletteID>=itemInEdit.palettes.length) itemInEdit.boxes[i].paletteID = itemInEdit.palettes.length-1;
+      displaySprite(itemInEdit.sprites[itemInEdit.boxes[i].spriteID],itemInEdit.palettes[itemInEdit.boxes[i].paletteID],[5,5],145+pos.x,95+pos.y*45);
+      pos.y++;
     }
-    if (pkey[32]===true) {
-      if (mouseX>750) {
-        if (mouseY>50&&mouseY<150) {
-          itemInEdit = JSON.parse(JSON.stringify(p1.items.b));
-        }
-        if (mouseY>250&&mouseY<350) {
-          itemInEdit = JSON.parse(JSON.stringify(p1.items.a));
-        }
-      }
-    }
-  //}
-    //cursor{
-    cursor('NONE');
-    stroke(255-red(paletteInEdit[state]),255-green(paletteInEdit[state]),255-blue(paletteInEdit[state]),255);
-    fill(paletteInEdit[state]);
-    if (state === 0) {
-      fill(
-      (sin((frameCount+0)/35)*(255/10))+(255/2),
-      (sin((frameCount+200)/35)*(255/10))+(255/2),
-      (sin((frameCount+1500)/35)*(255/10))+(255/2)
-    );
-    }
+    button('+',125+pos.x,75+pos.y*45,40,40,function() {
+      itemInEdit.boxes[itemInEdit.boxes.length] = emptyBox();
+    });
+  },
+  'edit-hitbox' : function() {
+    background(150);
+    ntext('edit hitbox '+hitboxInEdit.ID+' - '+itemInEdit.name,15,15,3);
+    button('OK',width-100,0,100,25,function() {
+      forgeScreen = 'edit-item';
+      itemInEdit.boxes[hitboxInEdit.ID] = JSON.parse(JSON.stringify(hitboxInEdit.data));
+    });
+    button('CANCEL',width-100,25,100,25,function() {
+      forgeScreen = 'edit-item';
+    });
+    push();
+    stroke(255);
+    for (var i = 0; i < itemInEdit.sprites.length; i ++) line(map(i,0,itemInEdit.sprites.length,20,120),50,map(i,0,itemInEdit.sprites.length,20,120),65);
+    pop();
+    hitboxInEdit.data.spriteID = floor(slider2(hitboxInEdit.data.spriteID,20,70,100,15,itemInEdit.sprites.length));
+    ntext('sprite',150,74,2);
+    
+    push();
+    stroke(255);
+    for (var i = 0; i < itemInEdit.palettes.length; i ++) line(map(i,0,itemInEdit.palettes.length,20,120),100,map(i,0,itemInEdit.palettes.length,20,120),115);
+    pop();
+    hitboxInEdit.data.paletteID = floor(slider2(hitboxInEdit.data.paletteID,20,120,100,15,itemInEdit.palettes.length));
+    ntext('palette',150,124,2);
     
     
-        
+    fill((sin(frameCount*(PI/180))+1)/2*255,(cos(frameCount*(PI/180))+1)/2*255,(sin(frameCount*(PI/180))+1)/2*255);
+      rect(278,72,42,42);
+      if (hitboxInEdit.data.spriteID>=itemInEdit.sprites.length) hitboxInEdit.data.spriteID = itemInEdit.sprites.length-1;
+      if (hitboxInEdit.data.paletteID>=itemInEdit.palettes.length) hitboxInEdit.data.paletteID = itemInEdit.palettes.length-1;
+      displaySprite(itemInEdit.sprites[hitboxInEdit.data.spriteID],itemInEdit.palettes[hitboxInEdit.data.paletteID],[5,5],300,94);
     
+    button('DELETE HITBOX',width-275,height-25,275,25,function() {
+      itemInEdit.boxes.splice(hitboxInEdit.ID,hitboxInEdit.ID+1);
+      forgeScreen = 'edit-item';
+    });
+  },
+  'edit-palette' : function() {
+    background(150);
+    button('OK',width-100,0,100,25,function() {
+      forgeScreen = 'edit-item';
+      itemInEdit.palettes[paletteInEdit.ID] = JSON.parse(JSON.stringify(paletteInEdit.data));
+    });
+    button('CANCEL',width-100,25,100,25,function() {
+      forgeScreen = 'edit-item';
+    });
+    button('use with icon',0,height-25,230,25,function() {
+      itemInEdit.iconPalette = paletteInEdit.ID+0;
+    });
+    if (itemInEdit.palettes.length>1) button('DELETE PALETTE',width-275,height-25,275,25,function() {
+      itemInEdit.palettes.splice(paletteInEdit.ID,paletteInEdit.ID+1);
+      forgeScreen = 'edit-item';
+    });
+    
+    ntext('edit palette '+paletteInEdit.ID+' - '+itemInEdit.name,15,15,3);
+    fill(paletteInEdit.data[1][0],paletteInEdit.data[1][1],paletteInEdit.data[1][2]);
+    rect(width/4-25,height/4,50,50);
+    
+    paletteInEdit.data[1][0] = slider(paletteInEdit.data[1][0],width/4-20,height/4+100,10,100,255);
+    paletteInEdit.data[1][1] = slider(paletteInEdit.data[1][1],width/4-5,height/4+100,10,100,255);
+    paletteInEdit.data[1][2] = slider(paletteInEdit.data[1][2],width/4+10,height/4+100,10,100,255);
+    
+    fill(paletteInEdit.data[2][0],paletteInEdit.data[2][1],paletteInEdit.data[2][2]);
+    rect(width/2-25,height/4,50,50);
+    
+    paletteInEdit.data[2][0] = slider(paletteInEdit.data[2][0],width/2-20,height/4+100,10,100,255);
+    paletteInEdit.data[2][1] = slider(paletteInEdit.data[2][1],width/2-5,height/4+100,10,100,255);
+    paletteInEdit.data[2][2] = slider(paletteInEdit.data[2][2],width/2+10,height/4+100,10,100,255);
+    
+    fill(paletteInEdit.data[3][0],paletteInEdit.data[3][1],paletteInEdit.data[3][2]);
+    rect(width*3/4-25,height/4,50,50);
+    
+    paletteInEdit.data[3][0] = slider(paletteInEdit.data[3][0],width*3/4-20,height/4+100,10,100,255);
+    paletteInEdit.data[3][1] = slider(paletteInEdit.data[3][1],width*3/4-5,height/4+100,10,100,255);
+    paletteInEdit.data[3][2] = slider(paletteInEdit.data[3][2],width*3/4+10,height/4+100,10,100,255);
+    
+    
+  },
+  'edit-sprite' : function() {
+    background(150);
+    button('OK',width-100,0,100,25,function() {
+      forgeScreen = 'edit-item';
+      itemInEdit.sprites[spriteInEdit.ID] = JSON.parse(JSON.stringify(spriteInEdit.data));
+    });
+    button('CANCEL',width-100,25,100,25,function() {
+      forgeScreen = 'edit-item';
+    });
+    button('use with icon',0,height-25,230,25,function() {
+      itemInEdit.icon = spriteInEdit.ID+0;
+    });
+    if (itemInEdit.sprites.length>1) button('DELETE SPRITE',width-250,height-25,250,25,function() {
+      itemInEdit.sprites.splice(spriteInEdit.ID,spriteInEdit.ID+1);
+      forgeScreen = 'edit-item';
+    });
+    ntext('edit sprite '+spriteInEdit.ID+' - '+itemInEdit.name,15,15,3);
+    fill(100);
+    rect(width/2-100,height/2-100,200,200);
+    displaySprite(spriteInEdit.data,[[0,0,0,0],[255,255,255,255],[255,0,0,255],[0,0,0,255]],[25,25],width/2,height/2);
+    
+    
+    button('',width/4-27,height/2+148,54,54,function(){forgeFunc.selectedColor = 1;});
+    fill(255);
+    rect(width/4-25,height/2+150,50,50);
+    button('',width/2-27,height/2+148,54,54,function(){forgeFunc.selectedColor = 2;});
+    fill(255,0,0);
+    rect(width/2-25,height/2+150,50,50);
+    button('',width*3/4-27,height/2+148,54,54,function(){forgeFunc.selectedColor = 3;});
+    fill(0);
+    rect(width*3/4-25,height/2+150,50,50);
+    
+    button('eraser',width/2-75,height/2+225,150,25,function(){forgeFunc.selectedColor = 0;});
+    
+    var ar = [48,49,50,51];
+    for (var i = 0; i < 4; i ++) {
+      if (keys[ar[i]] === true) {
+        forgeFunc.selectedColor = i;
+      }
+    }
+    
+    if (highlighted(width/2-100,height/2-100,200,200)) {
+      if (mouseIsPressed === true) {
+        var xI = floor((mouseX - (width/2-100))/25);
+        var yI = floor((mouseY - (height/2-100))/25);
+        spriteInEdit.data[yI][xI] = forgeFunc.selectedColor;
+      }
+    }
+    fill([color(0,0,0,0),color(255),color(255,0,0),color(0)][forgeFunc.selectedColor]);
     rect(mouseX-5,mouseY-5,10,10);
-    //}
-    p1.forge();
+    
+  },
+  'selectedColor' : 0
+};
+
+
+
+var doesnum = 0;
+var does = [
+  function() {
+    fill(255,255,0);
+    rect(100,400,50,50);
+    if (rkeyFrame === true) p1.i.up = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,125,425);
+  },
+  function() {
+    fill(255,255,0);
+    rect(50,450,50,50);
+    if (rkeyFrame === true) p1.i.left = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,75,475);
+  },
+  function() {
+    fill(255,255,0);
+    rect(150,450,50,50);
+    if (rkeyFrame === true) p1.i.right = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,175,475);
+  },
+  function() {
+    fill(255,255,0);
+    rect(100,500,50,50);
+    if (rkeyFrame === true) p1.i.down = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,125,525);
+  },
+  function() {
+    fill(255,255,0);
+    ellipse(700,475,50,50);
+    if (rkeyFrame === true) p1.i.a = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,700,475);
+  },
+  function() {
+    fill(255,255,0);
+    ellipse(600,475,50,50);
+    if (rkeyFrame === true) p1.i.b = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,600,475);
+  },
+  function() {
+    fill(255,255,0);
+    rect(300,500,50,20);
+    textSize(15);
+    if (rkeyFrame === true) p1.i.start = keyCode;
+    if (mouseFrame === true) doesnum++;
+    fill(0);
+    text(key,325,510);
+  },
+  function() {
+    fill(255,255,0);
+    rect(400,500,50,20);
+    textSize(15);
+    if (rkeyFrame === true) p1.i.select = keyCode;
+    if (mouseFrame === true) playScreen = 'entername';
+    fill(0);
+    text(key,425,510);
+  }
+  
+];
+var doit = {
+  'forge' : function() {
+    forgeFunc[forgeScreen]();
+  },
+  
+  'play' : function() {
+    frameRate(60);
+    push();
+    if (twoplayer === true) {
+      translate(-floor((p1.x+p2.x)/2)+width/2,0/*-p1.y+height/2*/);
+    } else {
+      translate(-p1.x+width/2,0/*-p1.y+height/2*/);
+    }
+    if (dattimer<5) dattimer ++;
+    background(0);
+    if (dattimer<2) {
+      b.background(15,120,255);
+      areaDis(areas[area]);
+    }
+    push();
+    scale(5);
+    image(b,0,0);
+    pop();
+    p1.display();
+    p1.move();
+    p1.noMove = false;
+    p1.handleKeyPress();
+    p1.inhibitingItem.a = false;
+    p1.perform('a','b');
+    p1.inhibitingItem.b = false;
+    p1.perform('b','a');
+    handleboxes();
+    p1.do();
+    p1.physics();
+    
+    for (var i = 0; i < dum1.length; i ++) {
+      dum1[i].physics();
+      dum1[i].move();
+      dum1[i].interact();
+      dum1[i].display();
+      dum1[i].target(p1);
+
+    }
+    pop();
+    p1.ui();
+    p1.doPause();
     
     
+  
+  },
+  'pause' : function() {
+     frameRate(60);
+    push();
+    if (twoplayer === true) {
+      translate(-floor((p1.x+p2.x)/2)+width/2,0/*-p1.y+height/2*/);
+    } else {
+      translate(-p1.x+width/2,0/*-p1.y+height/2*/);
+    }
     
-}
-function draw() {
-  noSmooth();
-  alt = !alt;
-  if (playScreen === 'entername') {
+    push();
+    scale(5);
+    image(b,0,0); // display background
+    pop();
+    
+    p1.display(); // display player
+    p1.doPause(); // handle player keypresses
+    
+    
+    // render hitboxes
+    for (var i = 0; i < hitboxes.length; i ++) {
+      var box = hitboxes[i];
+      push();
+      translate(box.moveSelf.x,box.moveSelf.y);
+      scale(box.dir,1);
+      image(box.display,-20,-20,40,40);
+      pop();
+    }
+    
+    // render enemies
+    for (var i = 0; i < dum1.length; i ++) {
+      dum1[i].display();
+    }
+    pop();
+    
+    
+    // display menu
+    PauseMenu();
+    
+    
+  
+  },
+  'pause-save-management' : function() {
+     frameRate(60);
+    push();
+    if (twoplayer === true) {
+      translate(-floor((p1.x+p2.x)/2)+width/2,0/*-p1.y+height/2*/);
+    } else {
+      translate(-p1.x+width/2,0/*-p1.y+height/2*/);
+    }
+    
+    push();
+    scale(5);
+    image(b,0,0);
+    pop();
+    p1.display();
+    p1.doPause();
+    for (var i = 0; i < hitboxes.length; i ++) {
+      var box = hitboxes[i];
+      push();
+      translate(box.moveSelf.x,box.moveSelf.y);
+      scale(box.dir,1);
+      image(box.display,-20,-20,40,40);
+      pop();
+    }
+    for (var i = 0; i < dum1.length; i ++) {
+      dum1[i].display();
+    }
+    pop();
+    PauseMenuSaves();
+    
+    
+  
+  },
+  'entername' : function() {
     background(0,0,0);
     ntext("type your name here",40,200,5);
     ntext(p1.name,40,300,5);
@@ -1325,49 +1401,51 @@ function draw() {
     }
     if (pkey[ENTER] === true) {
       playScreen = 'play';
+      
       Save();
     }
-  } else if (playScreen === 'play'){
-    frameRate(60);
+  },
+  'map-controls' : function() {
+    textAlign(CENTER,CENTER);
+    background(0,0,0);
+    fill(255);
+    noStroke();
+    rect(50,450,150,50);
+    rect(100,400,50,150);
+    ellipse(700,475,50,50);
+    ellipse(600,475,50,50);
+    ntext('start',300,490,2);
+    ntext('select',400,490,2);
+    rect(300,500,50,20);
+    rect(400,500,50,20);
+    ntext('map controller',150,200,5);
+    ntext('b',600,525,5);
+    ntext('a',700,525,5);
     push();
-    if (twoplayer === true) {
-      translate(-floor((p1.x+p2.x)/2)+width/2,0/*-p1.y+height/2*/);
-    } else {
-      translate(-p1.x+width/2,0/*-p1.y+height/2*/);
-    }
-    dattimer ++;
-    background(0);
-    if (dattimer<2) {
-      b.background(15,120,255);
-      areaDis(areag[area]);
-    }
-    push();
-    scale(5);
-    image(b,0,0);
+    textSize(30);
+    does[doesnum]();
+    textSize(30);
     pop();
-    p1.display();
-    p1.move();
-    handleboxes();
-    p1.do();
-    p1.physics();
-
-    
-    pop();
-    p1.ui();
-    fill(0,255,0);
-    text('fps: '+floor(frameRate()*100)/100,20,100);
+  }
+};
+function draw() {
+  noSmooth();
+    doit[playScreen]();
   
-  } else if (playScreen === 'forge') {
-    forge();
-  }
+ fill(0,255,0);
+    if (frameCount%30 === 0) {
+      frames[0] = frameRate();
+      for (var i = 10; i > 0; i --) {
+        frames[i] = frames[i-1];
+      }
+    }
+    for (var i = 0; i < frames.length; i ++) {
+      text(floor(frames[i]),10,150+i*12);
+    }
+  
   mouseFrame = false;
-  if (keys[192] === true) {
-    localStorage.removeItem("savedata");
-  }
-  if (pkey[27] === true) {
-    Save();
-  }
+  
   rkey = [];
   pkey = [];
-  
+  rkeyFrame = false;
 }
