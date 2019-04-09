@@ -344,10 +344,10 @@ function setup() {
   playScreen = 'play';
   if (localStorage.hasOwnProperty("savedata") === true) {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
-    p1.name = ppos.name;
-    p1.items.a = ppos.itemA;
-    p1.items.b = ppos.itemB;
-    if (ppos.hasOwnProperty("controller")) p1.i = ppos.controller;
+    //p1.name = ppos.name;
+    //p1.items.a = ppos.itemA;
+    //p1.items.b = ppos.itemB;
+    if (ppos.hasOwnProperty("controller")) //p1.i = ppos.controller;
   } else {
     playScreen = 'map-controls';
   }
