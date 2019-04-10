@@ -342,7 +342,7 @@ function setup() {
   ];
   b = createGraphics(areas[area].graphics[0].length*8,areas[area].graphics.length*8);
   playScreen = 'play';
-  if (false&&localStorage.hasOwnProperty("savedata") === true) {
+  if (localStorage.hasOwnProperty("savedata") === true) {
     ppos =   JSON.parse(localStorage.getItem("savedata"));
     p1.name = ppos.name;
     p1.items.a = ppos.itemA;
