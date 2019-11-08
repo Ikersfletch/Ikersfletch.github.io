@@ -1,0 +1,230 @@
+{
+  "government": {
+    "name": "Government",
+    "periods": [
+      {
+        "name":"Divine Right",
+        "desc":"Justified a king's power under the\nidea that it was from God.",
+        "what_changed" : "",
+        "from" : 1350,
+        "to" : 1763,
+        "color": "#AAAA00"
+      },
+      {
+        "name": "Absolutist Rule",
+        "desc":"The political system where the ruler\n in theory had unlimited power;\nmostly attributed to Louis XIV.",
+        "what_changed": "This was in contrast to the fuedalist\nsystems where the monarch\nessentially had to appeal to the\nnobility.",
+        "from" : 1585,
+        "to" : 1715,
+        "color" : "#3333DD"
+      },
+      {
+        "name": "Parliamentary Rule",
+        "desc":"The political system where the ruler\nworked with a second body;\nmostly attributed to England.",
+        "what_changed": "This form of centralized government\nexisted before. However, the power\nwas, for the longest time, not in the\nParliament's hands.",
+        "from" : 1600,
+        "to" : 2019,
+        "color" : "#3333DD",
+        "top" : true
+      },
+      {
+        "name":"Social Contract",
+        "desc":"The theory that monarchs' power\nwas derived from the masses\nthrough a 'social contract.'",
+        "what_changed" : "This changed provided justification\nto oppose the monarch, if they\nbroke the 'social contract.'",
+        "from" : 1651,
+        "to" : 2000,
+        "color": "#8A8AFA"
+      },
+      {
+        "name" : "Wealthy Influence",
+        "desc" : "Those who weren't nobility could\nbecome wealthy, own land, and have\nsignificant influence.",
+        "what_changed" : "This led to an increase in\nclass-enforcing laws, such as game\nlaws, or limits to who can wear purple.",
+        "from" : 1777,
+        "to" : 2019,
+        "color" : "#FFBBFF"
+      }
+      
+    ]
+  },
+  "learning" : {
+    "name" : "Learning & Innovation",
+    "periods" : [
+      {
+        "name": "Classical Rediscovery",
+        "desc" : "The rediscovery of Greek and\nRoman Philosophers' texts.",
+        "what_changed" : "Rediscoveries of texts created the\nbasis of Humanism.",
+        "from" : 1350,
+        "to" : 1600,
+        "color" : "#33BB33"
+      },
+      {
+        "name" : "Copernican Model",
+        "desc" : "A heliocentric model of the universe,\nas described by Copernicus.",
+        "what_changed" : "While this predated the Scientific\nRevolution, its questioning of ancient\nand pre-established authority is\nconsidered the first step in modern\nscience.",
+        "from" : 1543,
+        "to" : 1543,
+        "color" : "#447744"
+      },
+      {
+        "name" : "Inductive Reasoning",
+        "desc" : "A method by which someone could\nobserve truth.",
+        "what_changed" : "Believed to be developed by Francis\nBacon, the approach relied on trusting\nnothing but what one could derive\nfrom experiments.",
+        "from" : 1620,
+        "to" : 2000,
+        "color" : "#11AA11",
+        "top" : "Hello Mr. Iannone! If you're seeing this, congratulations! You've found an Easter Egg!"
+      },
+      {
+        "name" : "Deductive Reasoning",
+        "desc" : "A method by which someone could\nderive truth.",
+        "what_changed" : "Believed to be developed by René\nDescartes, the approach relied on\ndenying ancient and commonplace\nknowledge, a radical idea for the time.\nBecame one pillar of modern science.",
+        "from" : 1637,
+        "to" : 2000,
+        "color" : "#11DD11"
+      },
+      {
+        "name" : "Industrial Innovations",
+        "desc" : "The invention of revolutionary\nmachines, such as the Steam Engine.",
+        "what_changed" : "Allowed the process of\nproletarianization and the later\nconsumerism by providing an\nexcess of goods.",
+        "from" : 1765,
+        "to" : 1830,
+        "color" : "#AA11AA"
+      }
+    ]
+  },
+  "war" : {
+    "name" : "War",
+    "periods" : [
+      {
+        "name" : "Religious Wars",
+        "desc" : "The series of wars mainly between\nCatholic authority and various\nProtestant groups.",
+        "what_changed" : "Those who opposed the Church\nnot only did so, but also were\neffective.",
+        "from" : 1562,
+        "to" : 1648,
+        "color" : "#117711"
+      },
+      {
+        "name" : "Puritan Takeover",
+        "desc" : "When England became a Puritan\nRepublic.",
+        "what_changed" : "This control was very tight, enforcing\nstrict Calvinist standards. Its\nimpopularity helped fortify\nEngland's Parliamentary system.",
+        "from" : 1649,
+        "to" : 1660,
+        "color" : "#5555FF"
+      },
+      {
+        "name" : "Austrian Succession",
+        "desc" : "Prussia's successful invasion of\nAustria. A prime example of England\n& France's rivalry.",
+        "what_changed" : "",
+        "from" : 1740,
+        "to" : 1748,
+        "color" : "#111177",
+        "top" : true
+      },
+      
+      {
+        "name" : "Seven Years' War",
+        "desc" : "The war which redirected most\ncountries away form colonialism.",
+        "what_changed" : "Led to England being the 'winner' of\nthe colony rivalries.",
+        "from" : 1756,
+        "to" : 1763,
+        "color" : "#111177"
+      }
+    ]
+  },
+  "art" : {
+    "name" : "Art",
+    "periods" : [
+      {
+        "name": "Midieval Art",
+        "desc": "Art as it was from the Middle Ages.",
+        "what_changed" : "",
+        "from" : 1350,
+        "to" : 1400,
+        "color" : "#202020"
+      },
+      {
+        "name": "Renaissance Art",
+        "desc": "Filled with geometry, perspective,\nshadows, and 'perfect' humans.",
+        "what_changed" : "The most noticable change was its\ndepiction of people; with perfect\nsymmetry and form. This was\ncoupled with perspective.",
+        "from" : 1400,
+        "to": 1600,
+        "color": "#A0C0A0"
+      },
+      {
+        "name" : "Baroque Art",
+        "desc" : "Filled with drama, less realism, and\nmore intense lighting.",
+        "what_changed" : "The paintings focused more\non the state and religion, not\ndissimilar to propaganda.",
+        "from" : 1600,
+        "to" : 1850,
+        "color" : "#5050AF"
+      },
+      {
+        "name" : "Written Word",
+        "desc" : "The rise of accessible Print Culture\nbegan in the late 16th century.",
+        "what_changed" : "In contrast to before, texts were\naffordable, and literacy rates in turn\nincreased.",
+        "from" : 1800,
+        "to" : 2000,
+        "color" : "#DD11DD"
+      }
+    ]
+  },
+  "religion" : {
+    "name": "Religion",
+    "periods": [
+      {
+        "name": "Catholic Supremacy",
+        "desc": "Religion as it was from the\nMiddle Ages.",
+        "what_changed" : "",
+        "from" : 1350,
+        "to": 1517,
+        "color": "#A0C0A0"
+      },
+      {
+        "name": "Protestantism",
+        "desc" : "New Ideas about theology",
+        "what_changed": "People began to interpret doctrine\nfor themselves. Before, questioning\nthe church and its theology was\nunthinkable.",
+        "from" : 1517,
+        "to" : 2019,
+        "color" : "#F0F0F0"
+      },
+      {
+        "name": "Edict of Nantes",
+        "desc": "Secular tolerance over religion,\nwithin France.",
+        "what_changed": "This was the first of its kind; most\nall countries would enforce the\nruler's religion of choice. It set a\nmodel that would eventually be\nfollowed.",
+        "from": 1598,
+        "to" : 1685,
+        "color": "#50E050"
+      },
+      {
+        "name": "Edict of Fontainebleau",
+        "desc": "This revoked the Edict of Nantes;\nshowing the kind of control that the\ngovernment desired at that time.",
+        "what_changed": "This was a prime example of the\nstates' expanding power; Louis XIV\nwanted no heretics, and adherence\nfor all.",
+        "from": 1685,
+        "to" : 1789,
+        "color": "#5050E0"
+      }
+      
+    ]
+  },
+  "periodization" : {
+    "name" : "Turning Points",
+    "periods" : [
+      {
+        "name": "Treaty of Westphalia",
+        "desc": "Ended the Thirty Years' War,\namong others.",
+        "what_changed": "Countries began to focus on power\nand centralization over religion about\nwhen this treaty was signed.",
+        "from": 1648,
+        "to" : 1648,
+        "color": "#FFFFFF"
+      },
+      {
+        "name": "Peace of Paris",
+        "desc": "Ended the Seven Years' War.",
+        "what_changed": "Countries began to focus on\nmercantilist and economic goals\ninstead of power and succession\naround this time.",
+        "from": 1763,
+        "to" : 1763,
+        "color": "#FFFFFF"
+      }
+    ]
+  }
+}
