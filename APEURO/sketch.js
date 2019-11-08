@@ -212,7 +212,7 @@ function draw() {
   textSize(15);
   text("made by Isaac Fletcher",5, height-5);
   text("Click on the boxes to get a brief description. Click on the circles to also see what changed.",width - textWidth("Click on the boxes to get a brief description. Click on the circles to also see what changed.")-5, height-5);
-  text("Due to the way integers work, some times shown here have too much accuracy.",width - textWidth("Due to the way integers work, some times shown here have too much accuracy.")-5, height-20);
+  text("Due to the way integers work, some times shown here have too much accuracy to be trusted.",width - textWidth("Due to the way integers work, some times shown here have too much accuracy to be trusted.")-5, height-20);
   pop();
   
   for (var i in chars) {
